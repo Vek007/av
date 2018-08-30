@@ -35,7 +35,6 @@ namespace ListImgControl
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.imageListView1 = new ImageListViewLib.ImageListView();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.addToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.removeToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -65,6 +64,7 @@ namespace ListImgControl
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.timerStatus = new System.Windows.Forms.Timer(this.components);
+            this.imageListView1 = new ImageListViewLib.ImageListView();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -111,22 +111,8 @@ namespace ListImgControl
             // toolStripStatusLabel
             // 
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(38, 17);
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Ready";
-            // 
-            // imageListView1
-            // 
-            this.imageListView1.DefaultImage = ((System.Drawing.Image)(resources.GetObject("imageListView1.DefaultImage")));
-            this.imageListView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.imageListView1.ErrorImage = ((System.Drawing.Image)(resources.GetObject("imageListView1.ErrorImage")));
-            this.imageListView1.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.imageListView1.Location = new System.Drawing.Point(0, 0);
-            this.imageListView1.Name = "imageListView1";
-            this.imageListView1.Size = new System.Drawing.Size(600, 457);
-            this.imageListView1.TabIndex = 0;
-            this.imageListView1.Text = "";
-            this.imageListView1.SelectionChanged += new System.EventHandler(this.imageListView1_SelectionChanged);
-            this.imageListView1.ThumbnailCached += new ImageListViewLib.ThumbnailCachedEventHandler(this.imageListView1_ThumbnailCached);
             // 
             // toolStrip
             // 
@@ -153,7 +139,7 @@ namespace ListImgControl
             this.clearCacheToolStripButton});
             this.toolStrip.Location = new System.Drawing.Point(3, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(562, 25);
+            this.toolStrip.Size = new System.Drawing.Size(576, 25);
             this.toolStrip.TabIndex = 0;
             // 
             // addToolStripButton
@@ -279,7 +265,7 @@ namespace ListImgControl
             // rendererToolStripLabel
             // 
             this.rendererToolStripLabel.Name = "rendererToolStripLabel";
-            this.rendererToolStripLabel.Size = new System.Drawing.Size(56, 22);
+            this.rendererToolStripLabel.Size = new System.Drawing.Size(57, 22);
             this.rendererToolStripLabel.Text = "Renderer:";
             // 
             // renderertoolStripComboBox
@@ -306,41 +292,41 @@ namespace ListImgControl
             this.thumbnailSizeToolStripDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("thumbnailSizeToolStripDropDownButton.Image")));
             this.thumbnailSizeToolStripDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.thumbnailSizeToolStripDropDownButton.Name = "thumbnailSizeToolStripDropDownButton";
-            this.thumbnailSizeToolStripDropDownButton.Size = new System.Drawing.Size(90, 22);
+            this.thumbnailSizeToolStripDropDownButton.Size = new System.Drawing.Size(101, 22);
             this.thumbnailSizeToolStripDropDownButton.Text = "Thumbnail Size";
             // 
             // x48ToolStripMenuItem
             // 
             this.x48ToolStripMenuItem.Name = "x48ToolStripMenuItem";
-            this.x48ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.x48ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.x48ToolStripMenuItem.Text = "48 x 48";
             this.x48ToolStripMenuItem.Click += new System.EventHandler(this.x48ToolStripMenuItem_Click);
             // 
             // x96ToolStripMenuItem
             // 
             this.x96ToolStripMenuItem.Name = "x96ToolStripMenuItem";
-            this.x96ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.x96ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.x96ToolStripMenuItem.Text = "96 x 96";
             this.x96ToolStripMenuItem.Click += new System.EventHandler(this.x96ToolStripMenuItem_Click);
             // 
             // x120ToolStripMenuItem
             // 
             this.x120ToolStripMenuItem.Name = "x120ToolStripMenuItem";
-            this.x120ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.x120ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.x120ToolStripMenuItem.Text = "120 x120";
             this.x120ToolStripMenuItem.Click += new System.EventHandler(this.x120ToolStripMenuItem_Click);
             // 
             // x150ToolStripMenuItem
             // 
             this.x150ToolStripMenuItem.Name = "x150ToolStripMenuItem";
-            this.x150ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.x150ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.x150ToolStripMenuItem.Text = "150 x150";
             this.x150ToolStripMenuItem.Click += new System.EventHandler(this.x150ToolStripMenuItem_Click);
             // 
             // x200ToolStripMenuItem
             // 
             this.x200ToolStripMenuItem.Name = "x200ToolStripMenuItem";
-            this.x200ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.x200ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.x200ToolStripMenuItem.Text = "200 x 200";
             this.x200ToolStripMenuItem.Click += new System.EventHandler(this.x200ToolStripMenuItem_Click);
             // 
@@ -359,12 +345,12 @@ namespace ListImgControl
             this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.deleteToolStripMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(106, 26);
+            this.contextMenuStrip.Size = new System.Drawing.Size(108, 26);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
             // 
@@ -379,14 +365,31 @@ namespace ListImgControl
             this.timerStatus.Interval = 2000;
             this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
             // 
-            // DemoForm
+            // imageListView1
+            // 
+            this.imageListView1.DefaultImage = ((System.Drawing.Image)(resources.GetObject("imageListView1.DefaultImage")));
+            this.imageListView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.imageListView1.ErrorImage = ((System.Drawing.Image)(resources.GetObject("imageListView1.ErrorImage")));
+            this.imageListView1.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.imageListView1.Location = new System.Drawing.Point(0, 0);
+            this.imageListView1.Name = "imageListView1";
+            this.imageListView1.Size = new System.Drawing.Size(600, 457);
+            this.imageListView1.TabIndex = 0;
+            this.imageListView1.Text = "";
+            this.imageListView1.ItemClick += new ImageListViewLib.ItemClickEventHandler(this.imageListView1_ItemClick);
+            this.imageListView1.SelectionChanged += new System.EventHandler(this.imageListView1_SelectionChanged);
+            this.imageListView1.ThumbnailCached += new ImageListViewLib.ThumbnailCachedEventHandler(this.imageListView1_ThumbnailCached);
+            this.imageListView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.imageListView1_KeyDown);
+            this.imageListView1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.imageListView1_KeyUp);
+            // 
+            // ListImgCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(600, 504);
             this.Controls.Add(this.toolStripContainer1);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.Name = "ListImage";
+            this.Name = "ListImgCtrl";
+            this.Size = new System.Drawing.Size(600, 504);
             this.toolStripContainer1.BottomToolStripPanel.ResumeLayout(false);
             this.toolStripContainer1.BottomToolStripPanel.PerformLayout();
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);

@@ -176,7 +176,9 @@ namespace ListImgControl
             }
             imageListView1.SetRenderer(new DemoRenderer());
         }
+        #endregion
 
+        #region public Methods.
         public void AddImage(string fileName, string infoTag, Object tag)
         {
             ;
@@ -195,12 +197,19 @@ namespace ListImgControl
             return imageListView1.Items;
         }
 
-        public void SelectImage(string fileName)
+        public bool SelectImage(string fileName)
         {
+            imageListView1.ClearSelection();
             foreach (ImageListViewItem img in imageListView1.Items)
             {
-
+                if (img.FileName == fileName)
+                {
+                    img.Selected = true;
+                    return true;
+                }
             }
+
+            return false;
         }
 
         #endregion
@@ -354,6 +363,10 @@ namespace ListImgControl
                 UpdateStatus("Ready");
             else if (imageListView1.SelectedItems.Count == 0)
                 UpdateStatus(string.Format("{0} images", imageListView1.Items.Count));
+            else if (imageListView1.SelectedItems.Count == 1)
+            {
+                UpdateStatus(string.Format("{0} with Tags - {1}", imageListView1.SelectedItems[0].FileName, imageListView1.SelectedItems[0].InfoTags)); ;
+            }
             else
             {
                 if (imageListView1.Items.FocusedItem == null)
@@ -450,5 +463,20 @@ namespace ListImgControl
             }
         }
         #endregion
+
+        private void imageListView1_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            UpdateStatus();
+        }
+
+        private void imageListView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            UpdateStatus();
+        }
+
+        private void imageListView1_KeyUp(object sender, KeyEventArgs e)
+        {
+            Debug.WriteLine("Key up pressed");
+        }
     }
 }

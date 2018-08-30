@@ -21,6 +21,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using System.Drawing.Imaging;
+using System.Diagnostics;
 
 namespace ImageListViewLib
 {
@@ -65,6 +66,7 @@ namespace ImageListViewLib
             private bool selfDragging;
 
             private System.Windows.Forms.Timer scrollTimer;
+            private bool removeInfoTagChar = false;
             #endregion
 
             #region Properties
@@ -687,10 +689,40 @@ namespace ImageListViewLib
                     {
                         string keyStr = ((char)e.KeyValue).ToString();
 
-                        if (!mImageListView.Items.FocusedItem.InfoTags.Contains(keyStr.ToUpper()))
+                        if (e.KeyCode == Keys.OemMinus || e.KeyCode == Keys.Subtract || keyStr == "-")
                         {
-                            string infoTag = mImageListView.Items.FocusedItem.InfoTags + (char)e.KeyValue;
-                            mImageListView.Items[mImageListView.Items.FocusedItem.Index].InfoTags = infoTag;
+                            removeInfoTagChar = true;
+                            e.Handled = true;
+                            return;
+                        }
+                        else if (e.KeyCode == Keys.Left || e.KeyCode == Keys.Right || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
+                        {
+                            Debug.WriteLine("Nav KEys");
+                        }
+                        else if (e.KeyCode == Keys.Menu)
+                        {
+                            e.Handled = true;
+                            return;
+                        }
+                        else if (e.KeyCode == Keys.Back && mImageListView.Items[mImageListView.Items.FocusedItem.Index].InfoTags.Length > 0)
+                        {
+                            mImageListView.Items[mImageListView.Items.FocusedItem.Index].InfoTags = mImageListView.Items[mImageListView.Items.FocusedItem.Index].InfoTags.Substring(0, mImageListView.Items[mImageListView.Items.FocusedItem.Index].InfoTags.Length - 1);
+                        }
+                        else
+                        {
+                            if (removeInfoTagChar)
+                            {
+                                removeInfoTagChar = false;
+                                mImageListView.Items[mImageListView.Items.FocusedItem.Index].InfoTags = mImageListView.Items[mImageListView.Items.FocusedItem.Index].InfoTags.Replace(keyStr, "");
+                            }
+                            else
+                            {
+                                if (!mImageListView.Items.FocusedItem.InfoTags.Contains(keyStr.ToUpper()))
+                                {
+                                    string infoTag = mImageListView.Items.FocusedItem.InfoTags + (char)e.KeyValue;
+                                    mImageListView.Items[mImageListView.Items.FocusedItem.Index].InfoTags = infoTag;
+                                }
+                            }
                         }
                         index = mImageListView.Items.FocusedItem.Index;
                     }

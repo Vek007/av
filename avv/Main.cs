@@ -154,6 +154,13 @@ namespace AV
                     {
                         contextMenuAlbum.Items[0].Visible = true;
                     }
+
+                    if (node.Tag != null)
+                    {
+                        ph ph1 = (ph)node.Tag;
+                        imgList.Select();
+                        imgList.SelectImage(ph1.path);
+                    }
                 }
             }
         }
@@ -246,9 +253,15 @@ namespace AV
                     imgList.AddImage(phh.path, phh.infoTags, phh);
                 }
             }
-            else if (treeAlbums.SelectedNode.Tag is ph Ph)
+            else if (treeAlbums.SelectedNode.Tag is ph phh)
             {
-                DrawPictToScale(new Bitmap(Ph.path));
+                DrawPictToScale(new Bitmap(phh.path));
+                imgList.Select();
+                if (!imgList.SelectImage(phh.path))
+                {
+                    imgList.AddImage(phh.path, phh.infoTags, phh);
+                    imgList.SelectImage(phh.path);
+                }
             }
             else
             {
@@ -399,6 +412,12 @@ namespace AV
         {
             tbMain.SelectedIndex = 1;
             RefreshTree();
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            SaveTags();
+            imgList.ClearImages();
         }
     }
 }

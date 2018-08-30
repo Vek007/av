@@ -46,6 +46,7 @@
             this.AlCal = new CalendarControl.CalendarControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.imgList = new ListImgControl.ListImgCtrl();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuAlbum.SuspendLayout();
             this.tbMain.SuspendLayout();
@@ -69,6 +70,7 @@
             this.newAlbumToolStripMenuItem,
             this.AddFilesMenuItem,
             this.saveMenuItem,
+            this.toolStripMenuItem2,
             this.toolStripMenuItem1,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -78,33 +80,33 @@
             // newAlbumToolStripMenuItem
             // 
             this.newAlbumToolStripMenuItem.Name = "newAlbumToolStripMenuItem";
-            this.newAlbumToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.newAlbumToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newAlbumToolStripMenuItem.Text = "&New Album";
             this.newAlbumToolStripMenuItem.Click += new System.EventHandler(this.OnNewAlbum);
             // 
             // AddFilesMenuItem
             // 
             this.AddFilesMenuItem.Name = "AddFilesMenuItem";
-            this.AddFilesMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.AddFilesMenuItem.Size = new System.Drawing.Size(180, 22);
             this.AddFilesMenuItem.Text = "A&dd Files";
             this.AddFilesMenuItem.Click += new System.EventHandler(this.AddFilesMenuItem_Click);
             // 
             // saveMenuItem
             // 
             this.saveMenuItem.Name = "saveMenuItem";
-            this.saveMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.saveMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveMenuItem.Text = "Sa&ve";
             this.saveMenuItem.Click += new System.EventHandler(this.saveMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(134, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.OnExit);
             // 
@@ -197,6 +199,13 @@
             this.imgList.Size = new System.Drawing.Size(698, 567);
             this.imgList.TabIndex = 0;
             // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem2.Text = "&Clear Viewer";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -239,6 +248,7 @@
         private ListImgControl.ListImgCtrl imgList;
         private CalendarControl.CalendarControl AlCal;
         private System.Windows.Forms.ToolStripMenuItem saveMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
     }
 }
 
