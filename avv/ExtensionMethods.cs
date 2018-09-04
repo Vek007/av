@@ -40,5 +40,17 @@ namespace AV
                 throw ex;
             }
         }
+
+        public static List<string> GetAllPhsWithFullPath(this al alm)
+        {
+            List<string> phs = new List<string>();
+
+            foreach (ph phh in alm.phs)
+            {
+                phs.Add(phh.path);
+            }
+
+            return phs;
+        }
     }
 }

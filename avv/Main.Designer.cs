@@ -34,6 +34,7 @@
             this.newAlbumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AddFilesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.treeAlbums = new System.Windows.Forms.TreeView();
@@ -46,12 +47,14 @@
             this.AlCal = new CalendarControl.CalendarControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.imgList = new ListImgControl.ListImgCtrl();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.imgViewer = new KaiwaProjects.KpImageViewer();
             this.menuStrip1.SuspendLayout();
             this.contextMenuAlbum.SuspendLayout();
             this.tbMain.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -80,33 +83,40 @@
             // newAlbumToolStripMenuItem
             // 
             this.newAlbumToolStripMenuItem.Name = "newAlbumToolStripMenuItem";
-            this.newAlbumToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newAlbumToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.newAlbumToolStripMenuItem.Text = "&New Album";
             this.newAlbumToolStripMenuItem.Click += new System.EventHandler(this.OnNewAlbum);
             // 
             // AddFilesMenuItem
             // 
             this.AddFilesMenuItem.Name = "AddFilesMenuItem";
-            this.AddFilesMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.AddFilesMenuItem.Size = new System.Drawing.Size(139, 22);
             this.AddFilesMenuItem.Text = "A&dd Files";
             this.AddFilesMenuItem.Click += new System.EventHandler(this.AddFilesMenuItem_Click);
             // 
             // saveMenuItem
             // 
             this.saveMenuItem.Name = "saveMenuItem";
-            this.saveMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveMenuItem.Size = new System.Drawing.Size(139, 22);
             this.saveMenuItem.Text = "Sa&ve";
             this.saveMenuItem.Click += new System.EventHandler(this.saveMenuItem_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(139, 22);
+            this.toolStripMenuItem2.Text = "&Clear Viewer";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(136, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.OnExit);
             // 
@@ -153,6 +163,7 @@
             // 
             this.tbMain.Controls.Add(this.tabPage1);
             this.tbMain.Controls.Add(this.tabPage2);
+            this.tbMain.Controls.Add(this.tabPage3);
             this.tbMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbMain.Location = new System.Drawing.Point(225, 24);
             this.tbMain.Name = "tbMain";
@@ -199,12 +210,44 @@
             this.imgList.Size = new System.Drawing.Size(698, 567);
             this.imgList.TabIndex = 0;
             // 
-            // toolStripMenuItem2
+            // tabPage3
             // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItem2.Text = "&Clear Viewer";
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+            this.tabPage3.Controls.Add(this.imgViewer);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(704, 573);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Viewer";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // imgViewer
+            // 
+            this.imgViewer.BackgroundColor = System.Drawing.SystemColors.ControlLight;
+            this.imgViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.imgViewer.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.imgViewer.GifAnimation = false;
+            this.imgViewer.GifFPS = 15D;
+            this.imgViewer.Image = null;
+            this.imgViewer.Location = new System.Drawing.Point(3, 3);
+            this.imgViewer.MenuColor = System.Drawing.Color.LightSteelBlue;
+            this.imgViewer.MenuPanelColor = System.Drawing.Color.LightSteelBlue;
+            this.imgViewer.MinimumSize = new System.Drawing.Size(454, 157);
+            this.imgViewer.Name = "imgViewer";
+            this.imgViewer.NavigationPanelColor = System.Drawing.Color.LightSteelBlue;
+            this.imgViewer.NavigationTextColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.imgViewer.OpenButton = true;
+            this.imgViewer.PreviewButton = true;
+            this.imgViewer.PreviewPanelColor = System.Drawing.Color.LightSteelBlue;
+            this.imgViewer.PreviewText = "Preview";
+            this.imgViewer.PreviewTextColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.imgViewer.Rotation = 0;
+            this.imgViewer.Scrollbars = false;
+            this.imgViewer.ShowPreview = true;
+            this.imgViewer.Size = new System.Drawing.Size(698, 567);
+            this.imgViewer.TabIndex = 0;
+            this.imgViewer.TextColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.imgViewer.Zoom = 100D;
             // 
             // Main
             // 
@@ -224,6 +267,7 @@
             this.tbMain.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -249,6 +293,8 @@
         private CalendarControl.CalendarControl AlCal;
         private System.Windows.Forms.ToolStripMenuItem saveMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private KaiwaProjects.KpImageViewer imgViewer;
     }
 }
 

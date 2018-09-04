@@ -19,6 +19,8 @@ namespace AV
         public Main()
         {
             InitializeComponent();
+            this.KeyPreview = true;
+            tbMain.SelectedIndex = 2;
         }
 
         private void LoadAls()
@@ -53,6 +55,7 @@ namespace AV
 
             Dictionary<string, ItemInfo> hashPh = new Dictionary<string, ItemInfo>();
             Dictionary<string, ItemInfo> hashAh = new Dictionary<string, ItemInfo>();
+
             foreach (ph pho in allPhs)
             {
                 ItemInfo phInfo = new ItemInfo
@@ -79,7 +82,7 @@ namespace AV
                             alInfo.Text = alm.name;
                             alInfo.StartTime = phInfo.StartTime.AddHours(i); i++;
                             alInfo.EndTime = alInfo.StartTime.AddMinutes(30);
-                            alInfo.R = alm.r??0;
+                            alInfo.R = alm.r ?? 0;
                             alInfo.G = alm.g ?? 0;
                             alInfo.B = alm.b ?? 0;
                             hashAh.Add(alm.name+alInfo.StartTime.ToShortDateString(), alInfo);
@@ -252,6 +255,9 @@ namespace AV
                 {
                     imgList.AddImage(phh.path, phh.infoTags, phh);
                 }
+
+                imgViewer.LoadImageList(alm.GetAllPhsWithFullPath());
+                tbMain.SelectedIndex = 2;
             }
             else if (treeAlbums.SelectedNode.Tag is ph phh)
             {

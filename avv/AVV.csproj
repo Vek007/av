@@ -76,10 +76,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
@@ -196,6 +196,10 @@
     <ProjectReference Include="..\ImageListViewLib\ImageListViewLib.csproj">
       <Project>{0c295fb8-c6c6-4a40-9f19-05a43f353a04}</Project>
       <Name>ImageListViewLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageViewer\ImViewer.csproj">
+      <Project>{68d11ddd-0081-4037-99d4-69b3afcbdd8d}</Project>
+      <Name>ImViewer</Name>
     </ProjectReference>
     <ProjectReference Include="..\ListImgControl\ListImgControl.csproj">
       <Project>{a4fca838-02e1-4c57-b0c0-8a6734657c47}</Project>
