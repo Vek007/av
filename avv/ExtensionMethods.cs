@@ -1,4 +1,5 @@
 ﻿using AV;
+using KaiwaProjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,13 +42,13 @@ namespace AV
             }
         }
 
-        public static List<string> GetAllPhsWithFullPath(this al alm)
+        public static List<Photo> GetAllPhsWithFullPath(this al alm)
         {
-            List<string> phs = new List<string>();
+            List<Photo> phs = new List<Photo>();
 
             foreach (ph phh in alm.phs)
             {
-                phs.Add(phh.path);
+                phs.Add(new Photo(phh.id,phh.name,phh.description, phh.path, phh.infoTags));
             }
 
             return phs;

@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="AlPh.Context.tt" />
+    <None Remove="AlPh.tt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="AlPh.Context.tt">
+      <DependentUpon>AlPh.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </Content>
+    <Content Include="AlPh.tt">
+      <DependentUpon>AlPh.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="al.cs">
+      <DependentUpon>AlPh.tt</DependentUpon>
+    </Compile>
+    <Compile Update="AlPh.Context.cs">
+      <DependentUpon>AlPh.Context.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="AlPh.cs">
+      <DependentUpon>AlPh.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="AlPh.Designer.cs">
+      <DependentUpon>AlPh.edmx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="ph.cs">
+      <DependentUpon>AlPh.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="AlPh.edmx.diagram">
+      <DependentUpon>AlPh.edmx</DependentUpon>
+    </None>
+  </ItemGroup>
+
+</Project>

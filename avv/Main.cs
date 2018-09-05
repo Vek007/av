@@ -10,6 +10,8 @@ using System.Collections.ObjectModel;
 using System.Threading;
 using CalendarControl;
 using ImageListViewLib;
+using System.Diagnostics;
+using KaiwaProjects;
 
 namespace AV
 {
@@ -257,6 +259,8 @@ namespace AV
                 }
 
                 imgViewer.LoadImageList(alm.GetAllPhsWithFullPath());
+                if(imgViewer.GetCurrentImage()!=null)
+                    UpdateStatusBar(imgViewer.GetCurrentImage().infoTags);
                 tbMain.SelectedIndex = 2;
             }
             else if (treeAlbums.SelectedNode.Tag is ph phh)
@@ -267,6 +271,7 @@ namespace AV
                 {
                     imgList.AddImage(phh.path, phh.infoTags, phh);
                     imgList.SelectImage(phh.path);
+                    UpdateStatusBar(phh.infoTags);
                 }
             }
             else
@@ -424,6 +429,57 @@ namespace AV
         {
             SaveTags();
             imgList.ClearImages();
+        }
+
+        protected override bool ProcessKeyPreview(ref Message m)
+        {
+            Debug.WriteLine(m.ToString());
+
+            //if (m.Msg == WM_KEYUP)
+            {
+                int j = 0;
+            }
+
+            if ((int)m.WParam == (int)Keys.Left)
+            {
+                imgViewer.ApplyLeftRightArrowKey(true);
+                if (imgViewer.GetCurrentImage() != null)
+                    UpdateStatusBar(imgViewer.GetCurrentImage().infoTags);
+
+            }
+            else if ((int)m.WParam == (int)Keys.Right)
+            {
+                imgViewer.ApplyLeftRightArrowKey(false);
+                if (imgViewer.GetCurrentImage() != null)
+                    UpdateStatusBar(imgViewer.GetCurrentImage().infoTags);
+
+            }
+
+            if (m.Msg == 258 && ( char.IsLetter((char)m.WParam) || char.IsDigit((char)m.WParam)))
+            {
+                Debug.WriteLine(m.WParam.ToString());
+
+                Photo curImg = imgViewer.GetCurrentImage();
+
+                ph curPhh = Data.alDb.phs.Where(a => a.path == curImg.path).FirstOrDefault();
+
+                if (curPhh != null && !curPhh.infoTags.ToLower().Contains((char)m.WParam))
+                {
+                    curPhh.infoTags += (char)m.WParam;
+                }
+
+                UpdateStatusBar(curPhh.infoTags);
+
+                curPhh.UpdatePh();
+                Data.RefreshDatabase(curPhh);
+            }
+
+            return base.ProcessKeyPreview(ref m);
+        }
+
+        private void UpdateStatusBar(string infoTags)
+        {
+            this.sbLabel.Text = infoTags;
         }
     }
 }

@@ -49,12 +49,15 @@
             this.imgList = new ListImgControl.ListImgCtrl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.imgViewer = new KaiwaProjects.KpImageViewer();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.sbLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.contextMenuAlbum.SuspendLayout();
             this.tbMain.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -236,8 +239,8 @@
             this.imgViewer.Name = "imgViewer";
             this.imgViewer.NavigationPanelColor = System.Drawing.Color.LightSteelBlue;
             this.imgViewer.NavigationTextColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.imgViewer.OpenButton = true;
-            this.imgViewer.PreviewButton = true;
+            this.imgViewer.OpenButton = false;
+            this.imgViewer.PreviewButton = false;
             this.imgViewer.PreviewPanelColor = System.Drawing.Color.LightSteelBlue;
             this.imgViewer.PreviewText = "Preview";
             this.imgViewer.PreviewTextColor = System.Drawing.SystemColors.ButtonHighlight;
@@ -249,14 +252,32 @@
             this.imgViewer.TextColor = System.Drawing.SystemColors.ButtonHighlight;
             this.imgViewer.Zoom = 100D;
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sbLabel});
+            this.statusStrip1.Location = new System.Drawing.Point(225, 601);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(712, 22);
+            this.statusStrip1.TabIndex = 9;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // sbLabel
+            // 
+            this.sbLabel.Name = "sbLabel";
+            this.sbLabel.Size = new System.Drawing.Size(47, 17);
+            this.sbLabel.Text = "sbLabel";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(937, 623);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tbMain);
             this.Controls.Add(this.treeAlbums);
             this.Controls.Add(this.menuStrip1);
+            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Main";
             this.Text = "al";
@@ -268,6 +289,8 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -295,6 +318,8 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.TabPage tabPage3;
         private KaiwaProjects.KpImageViewer imgViewer;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel sbLabel;
     }
 }
 

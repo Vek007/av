@@ -38,7 +38,7 @@ namespace KaiwaProjects
         private Cursor grabCursor = null;
         private Cursor dragCursor = null;
 
-        private List<string> imgList = new List<string>();
+        private List<Photo> imgList = new List<Photo>();
 
         public delegate void ImageViewerRotationEventHandler(object sender, ImageViewerRotationEventArgs e);
         public event ImageViewerRotationEventHandler AfterRotation;
@@ -206,7 +206,6 @@ namespace KaiwaProjects
                 }
             }
         }
-
 
         public bool PreviewButton
         {
@@ -460,7 +459,7 @@ namespace KaiwaProjects
             }
         }
 
-        public KpImageViewer(List<string> imgFilenames) : this()
+        public KpImageViewer(List<Photo> imgFilenames) : this()
         {
             if (imgFilenames != null)
             {
@@ -675,7 +674,7 @@ namespace KaiwaProjects
 
             if (imgList.Count > 0)
             {
-                ShowImage(imgList[0]);
+                ShowImage(imgList[0].path);
             }
         }
 
@@ -902,18 +901,56 @@ namespace KaiwaProjects
             UpdatePanels(true);
         }
 
-        public void LoadImageList(List<string> fileNames)
+        public void LoadImageList(List<Photo> fileNames)
         {
             imgList = fileNames;
             if (imgList != null && imgList.Count > 0)
             {
-                this.ShowImage(imgList[0]);                    
+                this.ShowImage(imgList[0].path);                    
             }
         }
 
+        int currentIndex = -1;
         public void ShowImage(string fileName)
         {
-            this.ImagePath = fileName;
+            int idx = imgList.FindIndex(x => x.path.Trim() == fileName.Trim());
+            this.ImagePath = imgList[idx].path;
+            UpdatePanels(true);
+            currentIndex = idx;
+        }
+
+        public Photo GetCurrentImage()
+        {
+            if (currentIndex >= 0 && imgList!=null && imgList.Count > currentIndex)
+            {
+                return imgList[currentIndex];
+            }
+
+            return null;
+        }
+
+        public void ApplyLeftRightArrowKey(bool isLeftKey)
+        {
+            if (imgList == null)
+                return;
+
+            if (isLeftKey)
+            {
+                currentIndex--;
+            }
+            else
+            {
+                currentIndex++;
+            }
+
+
+            if (currentIndex >= imgList.Count)
+                currentIndex = imgList.Count - 1;
+
+            if (currentIndex < 0)
+                currentIndex = 0;
+
+            this.ImagePath = imgList[currentIndex].path;
             UpdatePanels(true);
         }
 

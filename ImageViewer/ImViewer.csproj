@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GifImage.cs" />
+    <Compile Include="Photo.cs" />
     <Compile Include="KP-DrawEngine.cs" />
     <Compile Include="KP-DrawObject.cs" />
     <Compile Include="ImViewr.cs">
