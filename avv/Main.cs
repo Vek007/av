@@ -12,6 +12,8 @@ using CalendarControl;
 using ImageListViewLib;
 using System.Diagnostics;
 using KaiwaProjects;
+using System.IO;
+using System.Globalization;
 
 namespace AV
 {
@@ -22,32 +24,30 @@ namespace AV
         {
             InitializeComponent();
             this.KeyPreview = true;
-            tbMain.SelectedIndex = 2;
         }
 
         private void LoadAls()
         {
-            List<al> lstAl = Data.GetAls();
-
-            // Now iterate through them and add to treeview
-            foreach(al alm in lstAl)
+            List<string> lstYears = Data.GetDistinctPhYears();
+            foreach (string year in lstYears)
             {
-                TreeNode albumNode = new TreeNode(alm.name);
-                
-                // Add the album struct to the Tag for later
-                // retrieval of info without database call
-                albumNode.Tag = alm;
-
-                treeAlbums.Nodes.Add(albumNode);
-
-                // Add each Ph in album to treenode for the album
-                foreach(ph Ph in alm.phs)
+                TreeNode yearNode = new TreeNode(year);
+                List<string> lstMonths = Data.GetDistinctPhMonths(Convert.ToInt32(year));
+                foreach (string mn in lstMonths)
                 {
-                    TreeNode PhNode = new TreeNode(Ph.name);
-                    PhNode.Tag = Ph;
+                    TreeNode mnNode = new TreeNode(mn);
+                    yearNode.Nodes.Add(mnNode);
+                    List<ph> phs = Data.GetPhByMonthsAndYear(Convert.ToInt32(year), DateTime.ParseExact(mn, "MMMM", CultureInfo.CurrentCulture).Month);
 
-                    albumNode.Nodes.Add(PhNode);
-                }                
+                    foreach (ph p in phs)
+                    {
+                        TreeNode pNode = new TreeNode(p.id);
+                        pNode.Tag = p;
+
+                        mnNode.Nodes.Add(pNode);
+                    }
+                }
+                treeAlbums.Nodes.Add(yearNode);
             }
         }
 
@@ -259,19 +259,39 @@ namespace AV
                 }
 
                 imgViewer.LoadImageList(alm.GetAllPhsWithFullPath());
-                if(imgViewer.GetCurrentImage()!=null)
+
+                if (imgViewer.GetImageList().Count > 0)
+                {
+                    imgViewer.ApplyLeftRightArrowKey(true, out string msg);
+                    if (msg.Length > 0)
+                    {
+                        UpdateStatusBar(msg);
+                    }
+                }
+
+                if (imgViewer.GetCurrentImage() != null)
+                {
                     UpdateStatusBar(imgViewer.GetCurrentImage().infoTags);
+                }
+
                 tbMain.SelectedIndex = 2;
             }
             else if (treeAlbums.SelectedNode.Tag is ph phh)
             {
-                DrawPictToScale(new Bitmap(phh.path));
-                imgList.Select();
-                if (!imgList.SelectImage(phh.path))
+                if (File.Exists(phh.path))
                 {
-                    imgList.AddImage(phh.path, phh.infoTags, phh);
-                    imgList.SelectImage(phh.path);
-                    UpdateStatusBar(phh.infoTags);
+                    DrawPictToScale(new Bitmap(phh.path));
+                    imgList.Select();
+                    if (!imgList.SelectImage(phh.path))
+                    {
+                        imgList.AddImage(phh.path, phh.infoTags, phh);
+                        imgList.SelectImage(phh.path);
+                        UpdateStatusBar(phh.infoTags);
+                    }
+                }
+                else
+                {
+                    UpdateStatusBar("File: " + phh.path + "doesn't exists");
                 }
             }
             else
@@ -416,7 +436,7 @@ namespace AV
         {
             treeAlbums.Nodes.Clear();
             LoadAls();
-            LoadCal();
+            //LoadCal();
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -442,16 +462,19 @@ namespace AV
 
             if ((int)m.WParam == (int)Keys.Left)
             {
-                imgViewer.ApplyLeftRightArrowKey(true);
+                imgViewer.ApplyLeftRightArrowKey(true, out string msg);
                 if (imgViewer.GetCurrentImage() != null)
                     UpdateStatusBar(imgViewer.GetCurrentImage().infoTags);
-
+                else
+                    UpdateStatusBar(msg);
             }
             else if ((int)m.WParam == (int)Keys.Right)
             {
-                imgViewer.ApplyLeftRightArrowKey(false);
+                imgViewer.ApplyLeftRightArrowKey(false, out string msg);
                 if (imgViewer.GetCurrentImage() != null)
                     UpdateStatusBar(imgViewer.GetCurrentImage().infoTags);
+                else
+                    UpdateStatusBar(msg);
 
             }
 

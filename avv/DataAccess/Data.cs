@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Core.Objects;
+using System.Globalization;
 
 namespace AV
 {
@@ -86,6 +87,32 @@ namespace AV
             }
 
             return albums.AsReadOnly();
+        }
+
+        public static List<ph> GetPhByMonthsAndYear(int year, int month)
+        {
+            List<ph> phList = alDb.phs.Where(p => p.time_stamp.Value.Year == year && p.time_stamp.Value.Month == month).ToList();
+
+            return phList;
+        }
+
+
+        public static List<string> GetDistinctPhYears()
+        {
+            List<string> years = alDb.phs.
+                Select(p => p.time_stamp.Value.Year.ToString()).Distinct().ToList();
+
+            return years;
+        }
+
+        public static List<string> GetDistinctPhMonths(int year)
+        {
+            List<string> monthInNames = alDb.phs.Where(p=>p.time_stamp.Value.Year==year).
+                Select(p => p.time_stamp.Value.Month.ToString()).Distinct().ToList().
+                Select(a => CultureInfo.CurrentCulture.DateTimeFormat.
+                GetMonthName(Convert.ToInt32(a))).ToList();
+
+            return monthInNames;
         }
 
         /// <summary>

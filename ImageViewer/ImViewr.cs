@@ -904,10 +904,11 @@ namespace KaiwaProjects
         public void LoadImageList(List<Photo> fileNames)
         {
             imgList = fileNames;
-            if (imgList != null && imgList.Count > 0)
-            {
-                this.ShowImage(imgList[0].path);                    
-            }
+        }
+
+        public List<Photo> GetImageList()
+        {
+            return imgList;
         }
 
         int currentIndex = -1;
@@ -929,10 +930,14 @@ namespace KaiwaProjects
             return null;
         }
 
-        public void ApplyLeftRightArrowKey(bool isLeftKey)
+        public void ApplyLeftRightArrowKey(bool isLeftKey, out string msg)
         {
+            msg = "";
             if (imgList == null)
+            {
+                msg = "Error - No files.";
                 return;
+            }
 
             if (isLeftKey)
             {
@@ -950,8 +955,15 @@ namespace KaiwaProjects
             if (currentIndex < 0)
                 currentIndex = 0;
 
-            this.ImagePath = imgList[currentIndex].path;
-            UpdatePanels(true);
+            if (File.Exists(imgList[currentIndex].path))
+            {
+                this.ImagePath = imgList[currentIndex].path;
+                UpdatePanels(true);
+            }
+            else
+            {
+                msg = "Error - File " + imgList[currentIndex].path + " doesnot exists.";
+            }
         }
 
         private void btnRotate270_Click(object sender, EventArgs e)
