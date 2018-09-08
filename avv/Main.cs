@@ -62,7 +62,7 @@ namespace AV
 
                     foreach (ph p in phs)
                     {
-                        TreeNode pNode = new TreeNode(p.id);
+                        TreeNode pNode = new TreeNode(p.id+"("+p.time_stamp.Value.Day.ToString()+")");
                         pNode.Tag = p;
 
                         mnNode.Nodes.Add(pNode);
@@ -280,7 +280,8 @@ namespace AV
                         LoadImageList(treeAlbums.SelectedNode.Nodes[0]);
                 }
 
-
+                treeAlbums.SelectedNode.Expand();
+                tbMain.SelectedIndex = 3;
             }
             else if (treeAlbums.SelectedNode.Tag is ph phh)
             {
@@ -303,6 +304,9 @@ namespace AV
                         imgViewer.ShowImage(phh.path, out msg);
                     }
                     UpdateStatusBar(msg);
+
+                    pictImage.ImageLocation = phh.path;
+                    tbMain.SelectedIndex = 3;
                 }
                 else
                 {
@@ -333,8 +337,10 @@ namespace AV
                     UpdateStatusBar(msg);
                 }
             }
+            pictImage.ImageLocation = imgViewer.GetCurrentImage().path;
+            pictImage.Refresh();
 
-            tbMain.SelectedIndex = 2;
+            tbMain.SelectedIndex = 3;
         }
 
         public void SaveTags()
@@ -498,90 +504,145 @@ namespace AV
                 int j = 0;
             }
 
-            if ((int)m.WParam == (int)Keys.Left)
+            if (m.Msg == 257)
             {
-                imgViewer.ApplyLeftRightArrowKey(true, out string msg);
-                if (imgViewer.GetCurrentImage() != null)
+                if ((int)m.WParam == (int)Keys.Left)
                 {
-                    if (!string.IsNullOrEmpty(imgViewer.GetCurrentImage().infoTags))
+                    imgViewer.ApplyLeftRightArrowKey(true, out string msg);
+                    Photo p = imgViewer.GetCurrentImage();
+                    if (p != null)
                     {
-                        UpdateStatusBar(imgViewer.GetCurrentImage().infoTags);
+                        pictImage.ImageLocation = p.path;
+                        pictImage.Refresh();
+                        if (!string.IsNullOrEmpty(p.infoTags))
+                        {
+                            UpdateStatusBar(p.infoTags);
+                        }
+                        else
+                        {
+                            UpdateStatusBar(p.id + " (no tags). ");
+                        }
                     }
                     else
-                    {
-                        UpdateStatusBar(imgViewer.GetCurrentImage().id + " (no tags). ");
-                    }
+                        UpdateStatusBar(msg);
+
+                    tbMain.SelectedIndex = 3;
                 }
-                else
-                    UpdateStatusBar(msg);
-            }
-            else if ((int)m.WParam == (int)Keys.Right)
-            {
-                imgViewer.ApplyLeftRightArrowKey(false, out string msg);
-                if (imgViewer.GetCurrentImage() != null)
+                else if ((int)m.WParam == (int)Keys.Right)
                 {
-                    if (!string.IsNullOrEmpty(imgViewer.GetCurrentImage().infoTags))
+                    imgViewer.ApplyLeftRightArrowKey(false, out string msg);
+                    Photo p = imgViewer.GetCurrentImage();
+                    if (p != null)
                     {
-                        UpdateStatusBar(imgViewer.GetCurrentImage().infoTags);
+                        pictImage.ImageLocation = p.path;
+                        pictImage.Refresh();
+                        if (!string.IsNullOrEmpty(p.infoTags))
+                        {
+                            UpdateStatusBar(p.infoTags);
+                        }
+                        else
+                        {
+                            UpdateStatusBar(p.id + " (no tags). ");
+                        }
                     }
                     else
-                    {
-                        UpdateStatusBar(imgViewer.GetCurrentImage().id + " (no tags). ");
-                    }
+                        UpdateStatusBar(msg);
+
+                    tbMain.SelectedIndex = 3;
                 }
-                else
-                    UpdateStatusBar(msg);
-            }
-            else if ((int)m.WParam == (int)Keys.Add)
-            {
-                imgViewer.ZoomIn();
-            }
-            else if ((int)m.WParam == (int)Keys.Subtract)
-            {
-                imgViewer.ZoomOut();
-            }
-            else if ((int)m.WParam == (int)Keys.F2)
-            {
-                treeAlbums.Visible = false;
-                tbMain.Width += treeAlbums.Width;
-                tbMain.Left = 0;
-                imgViewer.HidePanels(true);
-            }
-            else if ((int)m.WParam == (int)Keys.F3)
-            {
-                treeAlbums.Visible = true;
-                tbMain.Width -= treeAlbums.Width;
-                tbMain.Left = treeAlbums.Width+5;
-
-                imgViewer.HidePanels(false);
-            }
-
-
-            if (m.Msg == 258 && ( char.IsLetter((char)m.WParam) || char.IsDigit((char)m.WParam)))
-            {
-                Debug.WriteLine(m.WParam.ToString());
-
-                Photo curImg = imgViewer.GetCurrentImage();
-
-                ph curPhh = Data.alDb.phs.Where(a => a.path == curImg.path).FirstOrDefault();
-
-                if (curPhh != null && !curPhh.infoTags.ToLower().Contains((char)m.WParam))
+                else if ((int)m.WParam == (int)Keys.Add)
                 {
-                    curPhh.infoTags += (char)m.WParam;
+                    imgViewer.ZoomIn();
+                }
+                else if ((int)m.WParam == (int)Keys.Subtract)
+                {
+                    imgViewer.ZoomOut();
+                }
+                else if ((int)m.WParam == (int)Keys.F2)
+                {
+                    treeAlbums.Visible = false;
+                    tbMain.Width += treeAlbums.Width;
+                    tbMain.Left = 0;
+                    imgViewer.HidePanels(true);
+                }
+                else if ((int)m.WParam == (int)Keys.F8)
+                {
+                    if (pictImage.SizeMode == PictureBoxSizeMode.Zoom)
+                    {
+                        pictImage.SizeMode = 0;
+                    }
+                    pictImage.SizeMode = pictImage.SizeMode + 1;
+
+                    sbPictSizeMode.Text = pictImage.SizeMode.ToString();
+                }
+                else if ((int)m.WParam == (int)Keys.F3)
+                {
+                    treeAlbums.Visible = true;
+                    tbMain.Width -= treeAlbums.Width;
+                    tbMain.Left = treeAlbums.Width + 5;
+
+                    imgViewer.HidePanels(false);
+                }
+                else if (char.IsLetter((char)m.WParam) || char.IsDigit((char)m.WParam))
+                {
+                    Debug.WriteLine(m.WParam.ToString());
+
+                    Photo curImg = imgViewer.GetCurrentImage();
+
+                    ph curPhh = Data.alDb.phs.Where(a => a.path == curImg.path).FirstOrDefault();
+
+                    curPhh.infoTags = curPhh.infoTags ?? "";
+
+                    if (curPhh != null && !curPhh.infoTags.ToLower().Contains((char)m.WParam))
+                    {
+                        curPhh.infoTags += (char)m.WParam;
+                    }
+
+                    UpdateStatusBar(curPhh.infoTags);
+
+                    curPhh.UpdatePh();
+                    Data.RefreshDatabase(curPhh);
+                }
+                else if ((int)m.WParam == (int)Keys.F3)
+                {
+                    Photo curImg = imgViewer.GetCurrentImage();
+
+                    ph curPhh = Data.alDb.phs.Where(a => a.path == curImg.path).FirstOrDefault();
+
+                    curPhh.infoTags = curPhh.infoTags ?? "";
+
+                    if (curPhh != null && curPhh.infoTags.Trim().Length>0)
+                    {
+                        curPhh.infoTags = curPhh.infoTags.Trim().Substring(0, curPhh.infoTags.Length - 1);
+                    }
+
+                    UpdateStatusBar(curPhh.infoTags);
+
+                    curPhh.UpdatePh();
+                    Data.RefreshDatabase(curPhh);
+
                 }
 
-                UpdateStatusBar(curPhh.infoTags);
 
-                curPhh.UpdatePh();
-                Data.RefreshDatabase(curPhh);
             }
-
             return base.ProcessKeyPreview(ref m);
         }
 
         private void UpdateStatusBar(string infoTags)
         {
             this.sbLabel.Text = infoTags;
+            this.sbPictSizeMode.Text = pictImage.SizeMode.ToString();
+        }
+
+        private void pictImage_Click(object sender, EventArgs e)
+        {
+            if (pictImage.Parent == this)
+                pictImage.Parent = tbMain.TabPages[3];
+            else
+                pictImage.Parent = this;
+
+            pictImage.BringToFront();
+            pictImage.Refresh();
         }
     }
 }

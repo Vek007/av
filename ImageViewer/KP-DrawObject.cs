@@ -3,6 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
+using System.Diagnostics;
 
 namespace KaiwaProjects
 {
@@ -1138,14 +1139,18 @@ namespace KaiwaProjects
             }
         }
 
-        public void FitToScreen()
+        public void FitToScreen(bool fitToPAnelWidth=false)
         {
             try
             {
                 if (this.Image != null)
                 {
+                    Debug.WriteLine(panelWidth);
                     double x_ratio = (double)panelWidth / (double)this.ImageWidth;
                     double y_ratio = (double)panelHeight / (double)this.ImageHeight;
+
+                    Debug.WriteLine(x_ratio);
+                    Debug.WriteLine(y_ratio);
 
                     if ((this.ImageWidth <= panelWidth) && (this.ImageHeight <= panelHeight))
                     {

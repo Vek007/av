@@ -924,6 +924,7 @@ namespace KaiwaProjects
             this.ImagePath = imgList[idx].path;
             msg = imgList[idx].infoTags ?? imgList[idx].id + " - (no tags)";
             UpdatePanels(true);
+            drawing.FitToScreen();
             currentIndex = idx;
         }
 
@@ -943,6 +944,7 @@ namespace KaiwaProjects
             }
             panelMenu.Width = pbFull.Width;
             UpdatePanels(true);
+            this.drawing.FitToScreen();
         }
 
         public Photo GetCurrentImage()
@@ -984,6 +986,7 @@ namespace KaiwaProjects
             {
                 this.ImagePath = imgList[currentIndex].path;
                 UpdatePanels(true);
+                this.drawing.FitToScreen();
                 msg = imgList[currentIndex].infoTags ?? imgList[currentIndex].id + " - (no tags)";
             }
             else
