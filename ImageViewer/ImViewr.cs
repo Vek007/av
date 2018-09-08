@@ -674,7 +674,7 @@ namespace KaiwaProjects
 
             if (imgList.Count > 0)
             {
-                ShowImage(imgList[0].path);
+                ShowImage(imgList[0].path, out string msg);
             }
         }
 
@@ -912,12 +912,37 @@ namespace KaiwaProjects
         }
 
         int currentIndex = -1;
-        public void ShowImage(string fileName)
+        public void ShowImage(string fileName, out string msg)
         {
+            msg = "";
             int idx = imgList.FindIndex(x => x.path.Trim() == fileName.Trim());
+            if (idx < 0)
+            {
+                msg = "error - Item not in list.";
+                return;
+            }
             this.ImagePath = imgList[idx].path;
+            msg = imgList[idx].infoTags ?? imgList[idx].id + " - (no tags)";
             UpdatePanels(true);
             currentIndex = idx;
+        }
+
+        public void HidePanels(bool hide)
+        {
+            panelNavigation.Visible = !hide;
+            pbPanel.Visible = !hide;
+            panelPreview.Visible = !hide;
+
+            if (hide)
+            {
+                pbFull.Width += panelNavigation.Width;
+            }
+            else
+            {
+                pbFull.Width -= panelNavigation.Width;
+            }
+            panelMenu.Width = pbFull.Width;
+            UpdatePanels(true);
         }
 
         public Photo GetCurrentImage()
@@ -959,6 +984,7 @@ namespace KaiwaProjects
             {
                 this.ImagePath = imgList[currentIndex].path;
                 UpdatePanels(true);
+                msg = imgList[currentIndex].infoTags ?? imgList[currentIndex].id + " - (no tags)";
             }
             else
             {
@@ -1086,7 +1112,18 @@ namespace KaiwaProjects
             }
         }
 
-        private void UpdatePanels(bool updatePreview)
+        public void ZoomIn()
+        {
+            btnZoomIn_Click(null, null);
+        }
+
+        public void ZoomOut()
+        {
+            btnZoomOut_Click(null, null);
+        }
+
+
+        public void UpdatePanels(bool updatePreview)
         {
             if (drawing.CurrentSize.Width > 0 && drawing.OriginalSize.Width > 0)
             {

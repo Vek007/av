@@ -35,13 +35,13 @@
             this.panelMenu = new System.Windows.Forms.Panel();
             this.btnMode = new System.Windows.Forms.Button();
             this.btnPreview = new System.Windows.Forms.Button();
-            this.cbZoom = new System.Windows.Forms.ComboBox();
             this.btnFitToScreen = new System.Windows.Forms.Button();
             this.btnZoomIn = new System.Windows.Forms.Button();
             this.btnZoomOut = new System.Windows.Forms.Button();
             this.btnRotate270 = new System.Windows.Forms.Button();
             this.btnRotate90 = new System.Windows.Forms.Button();
             this.btnOpen = new System.Windows.Forms.Button();
+            this.cbZoom = new System.Windows.Forms.ComboBox();
             this.panelNavigation = new System.Windows.Forms.Panel();
             this.lblNavigation = new System.Windows.Forms.Label();
             this.tbNavigation = new System.Windows.Forms.TextBox();
@@ -121,17 +121,6 @@
             this.btnPreview.UseVisualStyleBackColor = true;
             this.btnPreview.Click += new System.EventHandler(this.btnPreview_Click);
             // 
-            // cbZoom
-            // 
-            this.cbZoom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbZoom.FormattingEnabled = true;
-            this.cbZoom.Location = new System.Drawing.Point(228, 3);
-            this.cbZoom.Name = "cbZoom";
-            this.cbZoom.Size = new System.Drawing.Size(62, 21);
-            this.cbZoom.TabIndex = 14;
-            this.cbZoom.SelectedIndexChanged += new System.EventHandler(this.cbZoom_SelectedIndexChanged);
-            this.cbZoom.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbZoom_KeyPress);
-            // 
             // btnFitToScreen
             // 
             this.btnFitToScreen.Image = global::KaiwaProjects.Properties.Resources.btnFitToScreen;
@@ -191,6 +180,16 @@
             this.btnOpen.TabIndex = 8;
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
+            // 
+            // cbZoom
+            // 
+            this.cbZoom.FormattingEnabled = true;
+            this.cbZoom.Location = new System.Drawing.Point(228, 3);
+            this.cbZoom.Name = "cbZoom";
+            this.cbZoom.Size = new System.Drawing.Size(62, 21);
+            this.cbZoom.TabIndex = 14;
+            this.cbZoom.SelectedIndexChanged += new System.EventHandler(this.cbZoom_SelectedIndexChanged);
+            this.cbZoom.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbZoom_KeyPress);
             // 
             // panelNavigation
             // 
@@ -265,7 +264,7 @@
             this.pbFull.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbFull.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.pbFull.BackColor = System.Drawing.Color.Black;
             this.pbFull.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbFull.Controls.Add(this.sbVert);
             this.pbFull.Controls.Add(this.sbHoriz);

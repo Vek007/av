@@ -24,6 +24,25 @@ namespace AV
         {
             InitializeComponent();
             this.KeyPreview = true;
+            MouseWheel += new MouseEventHandler(OnMouseWheel);
+        }
+
+
+
+        private void OnMouseWheel(object sender, MouseEventArgs e)
+        {
+            Debug.WriteLine(e.Delta);
+            if (tbMain.SelectedIndex == 2)
+            {
+                if (e.Delta > 0)
+                {
+                    imgViewer.ZoomIn();
+                }
+                else
+                {
+                    imgViewer.ZoomOut();
+                }
+            }
         }
 
         private void LoadAls()
@@ -32,10 +51,12 @@ namespace AV
             foreach (string year in lstYears)
             {
                 TreeNode yearNode = new TreeNode(year);
+                yearNode.Tag = "years";
                 List<string> lstMonths = Data.GetDistinctPhMonths(Convert.ToInt32(year));
                 foreach (string mn in lstMonths)
                 {
                     TreeNode mnNode = new TreeNode(mn);
+                    mnNode.Tag = "months";
                     yearNode.Nodes.Add(mnNode);
                     List<ph> phs = Data.GetPhByMonthsAndYear(Convert.ToInt32(year), DateTime.ParseExact(mn, "MMMM", CultureInfo.CurrentCulture).Month);
 
@@ -247,34 +268,19 @@ namespace AV
         /// <param name="e"></param>
         private void AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (treeAlbums.SelectedNode.Tag is al alm)
+            if (treeAlbums.SelectedNode.Tag is string alm)
             {
-                SaveTags();
-
-                imgList.ClearImages();
-
-                foreach (ph phh in alm.phs)
+                if (alm.Trim().ToLower() == "months")
                 {
-                    imgList.AddImage(phh.path, phh.infoTags, phh);
+                    LoadImageList(treeAlbums.SelectedNode);
+                }
+                else
+                {
+                    if(treeAlbums.SelectedNode.Nodes.Count > 0)
+                        LoadImageList(treeAlbums.SelectedNode.Nodes[0]);
                 }
 
-                imgViewer.LoadImageList(alm.GetAllPhsWithFullPath());
 
-                if (imgViewer.GetImageList().Count > 0)
-                {
-                    imgViewer.ApplyLeftRightArrowKey(true, out string msg);
-                    if (msg.Length > 0)
-                    {
-                        UpdateStatusBar(msg);
-                    }
-                }
-
-                if (imgViewer.GetCurrentImage() != null)
-                {
-                    UpdateStatusBar(imgViewer.GetCurrentImage().infoTags);
-                }
-
-                tbMain.SelectedIndex = 2;
             }
             else if (treeAlbums.SelectedNode.Tag is ph phh)
             {
@@ -288,6 +294,15 @@ namespace AV
                         imgList.SelectImage(phh.path);
                         UpdateStatusBar(phh.infoTags);
                     }
+
+                    imgViewer.ShowImage(phh.path, out string msg);
+
+                    if (msg.Length > 0 && msg.ToLower().Contains("error"))
+                    {
+                        LoadImageList(treeAlbums.SelectedNode.Parent);
+                        imgViewer.ShowImage(phh.path, out msg);
+                    }
+                    UpdateStatusBar(msg);
                 }
                 else
                 {
@@ -297,6 +312,29 @@ namespace AV
             else
             {
             }
+        }
+
+        private void LoadImageList(TreeNode nd)
+        {
+            List<Photo> phs = new List<Photo>();
+
+            foreach (TreeNode node in nd.Nodes)
+            {
+                phs.Add((node.Tag as ph).GetPhoto());
+            }
+
+            imgViewer.LoadImageList(phs);
+
+            if (imgViewer.GetImageList().Count > 0)
+            {
+                imgViewer.ApplyLeftRightArrowKey(true, out string msg);
+                if (msg.Length > 0)
+                {
+                    UpdateStatusBar(msg);
+                }
+            }
+
+            tbMain.SelectedIndex = 2;
         }
 
         public void SaveTags()
@@ -464,7 +502,16 @@ namespace AV
             {
                 imgViewer.ApplyLeftRightArrowKey(true, out string msg);
                 if (imgViewer.GetCurrentImage() != null)
-                    UpdateStatusBar(imgViewer.GetCurrentImage().infoTags);
+                {
+                    if (!string.IsNullOrEmpty(imgViewer.GetCurrentImage().infoTags))
+                    {
+                        UpdateStatusBar(imgViewer.GetCurrentImage().infoTags);
+                    }
+                    else
+                    {
+                        UpdateStatusBar(imgViewer.GetCurrentImage().id + " (no tags). ");
+                    }
+                }
                 else
                     UpdateStatusBar(msg);
             }
@@ -472,11 +519,43 @@ namespace AV
             {
                 imgViewer.ApplyLeftRightArrowKey(false, out string msg);
                 if (imgViewer.GetCurrentImage() != null)
-                    UpdateStatusBar(imgViewer.GetCurrentImage().infoTags);
+                {
+                    if (!string.IsNullOrEmpty(imgViewer.GetCurrentImage().infoTags))
+                    {
+                        UpdateStatusBar(imgViewer.GetCurrentImage().infoTags);
+                    }
+                    else
+                    {
+                        UpdateStatusBar(imgViewer.GetCurrentImage().id + " (no tags). ");
+                    }
+                }
                 else
                     UpdateStatusBar(msg);
-
             }
+            else if ((int)m.WParam == (int)Keys.Add)
+            {
+                imgViewer.ZoomIn();
+            }
+            else if ((int)m.WParam == (int)Keys.Subtract)
+            {
+                imgViewer.ZoomOut();
+            }
+            else if ((int)m.WParam == (int)Keys.F2)
+            {
+                treeAlbums.Visible = false;
+                tbMain.Width += treeAlbums.Width;
+                tbMain.Left = 0;
+                imgViewer.HidePanels(true);
+            }
+            else if ((int)m.WParam == (int)Keys.F3)
+            {
+                treeAlbums.Visible = true;
+                tbMain.Width -= treeAlbums.Width;
+                tbMain.Left = treeAlbums.Width+5;
+
+                imgViewer.HidePanels(false);
+            }
+
 
             if (m.Msg == 258 && ( char.IsLetter((char)m.WParam) || char.IsDigit((char)m.WParam)))
             {

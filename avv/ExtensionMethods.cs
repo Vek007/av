@@ -53,5 +53,10 @@ namespace AV
 
             return phs;
         }
+
+        public static Photo GetPhoto(this ph p)
+        {
+            return new Photo(p.id, p.name, p.description, p.path, p.infoTags);
+        }
     }
 }
