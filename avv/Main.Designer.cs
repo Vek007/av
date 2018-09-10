@@ -48,11 +48,11 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.imgList = new ListImgControl.ListImgCtrl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.sbLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.imgViewer = new KaiwaProjects.KpImageViewer();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.pictImage = new System.Windows.Forms.PictureBox();
-            this.imgViewer = new KaiwaProjects.KpImageViewer();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.sbLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.sbPictSizeMode = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.contextMenuAlbum.SuspendLayout();
@@ -60,9 +60,9 @@
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictImage)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -137,6 +137,7 @@
             this.treeAlbums.Size = new System.Drawing.Size(225, 599);
             this.treeAlbums.TabIndex = 1;
             this.treeAlbums.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.AfterSelect);
+            this.treeAlbums.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeAlbums_KeyDown);
             this.treeAlbums.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
             // 
             // contextMenuAlbum
@@ -230,45 +231,6 @@
             this.tabPage3.Text = "Viewer";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sbLabel,
-            this.sbPictSizeMode});
-            this.statusStrip1.Location = new System.Drawing.Point(225, 601);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(712, 22);
-            this.statusStrip1.TabIndex = 9;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // sbLabel
-            // 
-            this.sbLabel.Name = "sbLabel";
-            this.sbLabel.Size = new System.Drawing.Size(47, 17);
-            this.sbLabel.Text = "sbLabel";
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.pictImage);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(704, 573);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "pict";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // pictImage
-            // 
-            this.pictImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictImage.Location = new System.Drawing.Point(3, 3);
-            this.pictImage.Name = "pictImage";
-            this.pictImage.Size = new System.Drawing.Size(698, 567);
-            this.pictImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictImage.TabIndex = 0;
-            this.pictImage.TabStop = false;
-            this.pictImage.Click += new System.EventHandler(this.pictImage_Click);
-            // 
             // imgViewer
             // 
             this.imgViewer.BackgroundColor = System.Drawing.SystemColors.ControlLight;
@@ -296,6 +258,45 @@
             this.imgViewer.TabIndex = 0;
             this.imgViewer.TextColor = System.Drawing.SystemColors.ButtonHighlight;
             this.imgViewer.Zoom = 100D;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.pictImage);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(704, 573);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "pict";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // pictImage
+            // 
+            this.pictImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictImage.Location = new System.Drawing.Point(3, 3);
+            this.pictImage.Name = "pictImage";
+            this.pictImage.Size = new System.Drawing.Size(698, 567);
+            this.pictImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictImage.TabIndex = 0;
+            this.pictImage.TabStop = false;
+            this.pictImage.Click += new System.EventHandler(this.pictImage_Click);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sbLabel,
+            this.sbPictSizeMode});
+            this.statusStrip1.Location = new System.Drawing.Point(225, 601);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(712, 22);
+            this.statusStrip1.TabIndex = 9;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // sbLabel
+            // 
+            this.sbLabel.Name = "sbLabel";
+            this.sbLabel.Size = new System.Drawing.Size(47, 17);
+            this.sbLabel.Text = "sbLabel";
             // 
             // sbPictSizeMode
             // 
@@ -325,10 +326,10 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictImage)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

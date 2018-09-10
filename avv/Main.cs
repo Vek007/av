@@ -19,12 +19,13 @@ namespace AV
 {
     public partial class Main : Form
     {
-
+        private TreeNode selectedNode = null;
         public Main()
         {
             InitializeComponent();
             this.KeyPreview = true;
             MouseWheel += new MouseEventHandler(OnMouseWheel);
+            pictImage.KeyDown += treeAlbums_KeyDown;
         }
 
 
@@ -270,6 +271,7 @@ namespace AV
         {
             if (treeAlbums.SelectedNode.Tag is string alm)
             {
+                selectedNode = null;
                 if (alm.Trim().ToLower() == "months")
                 {
                     LoadImageList(treeAlbums.SelectedNode);
@@ -285,27 +287,11 @@ namespace AV
             }
             else if (treeAlbums.SelectedNode.Tag is ph phh)
             {
+                selectedNode = treeAlbums.SelectedNode;
                 if (File.Exists(phh.path))
                 {
-                    DrawPictToScale(new Bitmap(phh.path));
-                    imgList.Select();
-                    if (!imgList.SelectImage(phh.path))
-                    {
-                        imgList.AddImage(phh.path, phh.infoTags, phh);
-                        imgList.SelectImage(phh.path);
-                        UpdateStatusBar(phh.infoTags);
-                    }
-
-                    imgViewer.ShowImage(phh.path, out string msg);
-
-                    if (msg.Length > 0 && msg.ToLower().Contains("error"))
-                    {
-                        LoadImageList(treeAlbums.SelectedNode.Parent);
-                        imgViewer.ShowImage(phh.path, out msg);
-                    }
-                    UpdateStatusBar(msg);
-
                     pictImage.ImageLocation = phh.path;
+                    UpdateStatusBar(phh.infoTags ?? phh.id + "(no tags)");
                     tbMain.SelectedIndex = 3;
                 }
                 else
@@ -508,47 +494,9 @@ namespace AV
             {
                 if ((int)m.WParam == (int)Keys.Left)
                 {
-                    imgViewer.ApplyLeftRightArrowKey(true, out string msg);
-                    Photo p = imgViewer.GetCurrentImage();
-                    if (p != null)
-                    {
-                        pictImage.ImageLocation = p.path;
-                        pictImage.Refresh();
-                        if (!string.IsNullOrEmpty(p.infoTags))
-                        {
-                            UpdateStatusBar(p.infoTags);
-                        }
-                        else
-                        {
-                            UpdateStatusBar(p.id + " (no tags). ");
-                        }
-                    }
-                    else
-                        UpdateStatusBar(msg);
-
-                    tbMain.SelectedIndex = 3;
                 }
                 else if ((int)m.WParam == (int)Keys.Right)
                 {
-                    imgViewer.ApplyLeftRightArrowKey(false, out string msg);
-                    Photo p = imgViewer.GetCurrentImage();
-                    if (p != null)
-                    {
-                        pictImage.ImageLocation = p.path;
-                        pictImage.Refresh();
-                        if (!string.IsNullOrEmpty(p.infoTags))
-                        {
-                            UpdateStatusBar(p.infoTags);
-                        }
-                        else
-                        {
-                            UpdateStatusBar(p.id + " (no tags). ");
-                        }
-                    }
-                    else
-                        UpdateStatusBar(msg);
-
-                    tbMain.SelectedIndex = 3;
                 }
                 else if ((int)m.WParam == (int)Keys.Add)
                 {
@@ -643,6 +591,52 @@ namespace AV
 
             pictImage.BringToFront();
             pictImage.Refresh();
+        }
+
+        private void pictImage_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+
+        }
+
+        private void treeAlbums_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Left )
+            {
+                if (selectedNode != null)
+                {
+                    if (selectedNode != null && selectedNode.Parent.Nodes.Count >= 0 && selectedNode.Index > 0)
+                    {
+                        Debug.WriteLine("<>" + treeAlbums.SelectedNode.Text);
+                        treeAlbums.BeginUpdate();
+                        treeAlbums.SelectedNode = treeAlbums.SelectedNode.Parent.Nodes[selectedNode.Index - 1];
+                        selectedNode = treeAlbums.SelectedNode;
+                        treeAlbums.EndUpdate();
+                        treeAlbums.Refresh();
+                        Debug.WriteLine("<>" + treeAlbums.SelectedNode.Text);
+                        e.Handled = true;
+                    }
+                }
+            }
+
+            if (e.KeyCode == Keys.Right)
+            {
+                if (selectedNode != null)
+                {
+                    if (selectedNode != null && selectedNode.Parent.Nodes.Count >= 0 && selectedNode.Index > 0 && selectedNode.Index < selectedNode.Parent.Nodes.Count)
+                    {
+                        Debug.WriteLine("<>" + treeAlbums.SelectedNode.Text);
+                        treeAlbums.BeginUpdate();
+                        treeAlbums.SelectedNode = treeAlbums.SelectedNode.Parent.Nodes[selectedNode.Index + 1];
+                        selectedNode = treeAlbums.SelectedNode;
+                        treeAlbums.EndUpdate();
+                        treeAlbums.Refresh();
+                        Debug.WriteLine("<>" + treeAlbums.SelectedNode.Text);
+                        e.Handled = true;
+
+                    }
+                }
+            }
+
         }
     }
 }
