@@ -268,12 +268,12 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sbLabel,
             this.sbPictSizeMode,
-            this.sbSlideShow,
             this.sbTimerIncr,
+            this.sbSlideShow,
             this.sbTimerDecr});
-            this.statusStrip1.Location = new System.Drawing.Point(916, 24);
+            this.statusStrip1.Location = new System.Drawing.Point(904, 24);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(21, 599);
+            this.statusStrip1.Size = new System.Drawing.Size(33, 599);
             this.statusStrip1.TabIndex = 9;
             this.statusStrip1.Text = "statusStrip1";
             this.statusStrip1.TextDirection = System.Windows.Forms.ToolStripTextDirection.Vertical90;
@@ -281,15 +281,15 @@
             // sbLabel
             // 
             this.sbLabel.Name = "sbLabel";
-            this.sbLabel.Size = new System.Drawing.Size(31, 47);
-            this.sbLabel.Text = "sbLabel";
+            this.sbLabel.Size = new System.Drawing.Size(31, 60);
+            this.sbLabel.Text = "File Name";
             // 
             // sbPictSizeMode
             // 
             this.sbPictSizeMode.BorderStyle = System.Windows.Forms.Border3DStyle.RaisedOuter;
             this.sbPictSizeMode.Name = "sbPictSizeMode";
-            this.sbPictSizeMode.Size = new System.Drawing.Size(31, 70);
-            this.sbPictSizeMode.Text = "sbPictMode";
+            this.sbPictSizeMode.Size = new System.Drawing.Size(31, 61);
+            this.sbPictSizeMode.Text = "Pict Mode";
             // 
             // sbSlideShow
             // 
