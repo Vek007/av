@@ -26,6 +26,7 @@ namespace AV
             this.KeyPreview = true;
             MouseWheel += new MouseEventHandler(OnMouseWheel);
             pictImage.KeyDown += treeAlbums_KeyDown;
+            tbMain.KeyDown += treeAlbums_KeyDown;
         }
 
 
@@ -535,9 +536,9 @@ namespace AV
                 {
                     Debug.WriteLine(m.WParam.ToString());
 
-                    Photo curImg = imgViewer.GetCurrentImage();
+                    Photo curImg =  imgViewer.GetCurrentImage();
 
-                    ph curPhh = Data.alDb.phs.Where(a => a.path == curImg.path).FirstOrDefault();
+                    ph curPhh = treeAlbums.SelectedNode.Tag as ph;//Data.alDb.phs.Where(a => a.path == curImg.path).FirstOrDefault();
 
                     curPhh.infoTags = curPhh.infoTags ?? "";
 
@@ -555,7 +556,7 @@ namespace AV
                 {
                     Photo curImg = imgViewer.GetCurrentImage();
 
-                    ph curPhh = Data.alDb.phs.Where(a => a.path == curImg.path).FirstOrDefault();
+                    ph curPhh = treeAlbums.SelectedNode.Tag as ph;//Data.alDb.phs.Where(a => a.path == curImg.path).FirstOrDefault();
 
                     curPhh.infoTags = curPhh.infoTags ?? "";
 
@@ -622,7 +623,7 @@ namespace AV
             {
                 if (selectedNode != null)
                 {
-                    if (selectedNode != null && selectedNode.Parent.Nodes.Count >= 0 && selectedNode.Index > 0 && selectedNode.Index < selectedNode.Parent.Nodes.Count)
+                    if (selectedNode != null && selectedNode.Parent.Nodes.Count >= 0 && selectedNode.Index >= 0 && selectedNode.Index < selectedNode.Parent.Nodes.Count)
                     {
                         Debug.WriteLine("<>" + treeAlbums.SelectedNode.Text);
                         treeAlbums.BeginUpdate();
