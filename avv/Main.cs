@@ -478,7 +478,7 @@ namespace AV
 
         private void Main_Load(object sender, EventArgs e)
         {
-            tbMain.SelectedIndex = 1;
+            tbMain.SelectedIndex = 2;
             RefreshTree();
         }
 
