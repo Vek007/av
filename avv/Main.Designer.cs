@@ -43,8 +43,6 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tbMain = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.AlCal = new CalendarControl.CalendarControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.imgList = new ListImgControl.ListImgCtrl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -54,10 +52,13 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.sbLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.sbPictSizeMode = new System.Windows.Forms.ToolStripStatusLabel();
+            this.sbSlideShow = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tmrSlideShow = new System.Windows.Forms.Timer(this.components);
+            this.sbTimerIncr = new System.Windows.Forms.ToolStripStatusLabel();
+            this.sbTimerDecr = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.contextMenuAlbum.SuspendLayout();
             this.tbMain.SuspendLayout();
-            this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -170,7 +171,6 @@
             // 
             // tbMain
             // 
-            this.tbMain.Controls.Add(this.tabPage1);
             this.tbMain.Controls.Add(this.tabPage2);
             this.tbMain.Controls.Add(this.tabPage3);
             this.tbMain.Controls.Add(this.tabPage4);
@@ -180,25 +180,6 @@
             this.tbMain.SelectedIndex = 0;
             this.tbMain.Size = new System.Drawing.Size(712, 599);
             this.tbMain.TabIndex = 8;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.AlCal);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(704, 573);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Calendar";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // AlCal
-            // 
-            this.AlCal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.AlCal.Location = new System.Drawing.Point(3, 3);
-            this.AlCal.Name = "AlCal";
-            this.AlCal.Size = new System.Drawing.Size(698, 567);
-            this.AlCal.TabIndex = 0;
             // 
             // tabPage2
             // 
@@ -283,27 +264,71 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Dock = System.Windows.Forms.DockStyle.Right;
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sbLabel,
-            this.sbPictSizeMode});
-            this.statusStrip1.Location = new System.Drawing.Point(225, 601);
+            this.sbPictSizeMode,
+            this.sbSlideShow,
+            this.sbTimerIncr,
+            this.sbTimerDecr});
+            this.statusStrip1.Location = new System.Drawing.Point(916, 24);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(712, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(21, 599);
             this.statusStrip1.TabIndex = 9;
             this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip1.TextDirection = System.Windows.Forms.ToolStripTextDirection.Vertical90;
             // 
             // sbLabel
             // 
             this.sbLabel.Name = "sbLabel";
-            this.sbLabel.Size = new System.Drawing.Size(47, 17);
+            this.sbLabel.Size = new System.Drawing.Size(31, 47);
             this.sbLabel.Text = "sbLabel";
             // 
             // sbPictSizeMode
             // 
             this.sbPictSizeMode.BorderStyle = System.Windows.Forms.Border3DStyle.RaisedOuter;
             this.sbPictSizeMode.Name = "sbPictSizeMode";
-            this.sbPictSizeMode.Size = new System.Drawing.Size(70, 17);
+            this.sbPictSizeMode.Size = new System.Drawing.Size(31, 70);
             this.sbPictSizeMode.Text = "sbPictMode";
+            // 
+            // sbSlideShow
+            // 
+            this.sbSlideShow.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.sbSlideShow.BorderStyle = System.Windows.Forms.Border3DStyle.Bump;
+            this.sbSlideShow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.sbSlideShow.Name = "sbSlideShow";
+            this.sbSlideShow.Size = new System.Drawing.Size(31, 68);
+            this.sbSlideShow.Text = "Slide Show";
+            this.sbSlideShow.Click += new System.EventHandler(this.sbSlideShow_Click);
+            // 
+            // tmrSlideShow
+            // 
+            this.tmrSlideShow.Interval = 3000;
+            this.tmrSlideShow.Tick += new System.EventHandler(this.tmrSlideShow_Tick);
+            // 
+            // sbTimerIncr
+            // 
+            this.sbTimerIncr.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.sbTimerIncr.Name = "sbTimerIncr";
+            this.sbTimerIncr.Size = new System.Drawing.Size(31, 19);
+            this.sbTimerIncr.Text = "+";
+            this.sbTimerIncr.Visible = false;
+            this.sbTimerIncr.Click += new System.EventHandler(this.sbTimerIncr_Click);
+            // 
+            // sbTimerDecr
+            // 
+            this.sbTimerDecr.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.sbTimerDecr.Name = "sbTimerDecr";
+            this.sbTimerDecr.Size = new System.Drawing.Size(31, 22);
+            this.sbTimerDecr.Text = " - ";
+            this.sbTimerDecr.Visible = false;
+            this.sbTimerDecr.Click += new System.EventHandler(this.sbTimerDecr_Click);
             // 
             // Main
             // 
@@ -323,7 +348,6 @@
             this.menuStrip1.PerformLayout();
             this.contextMenuAlbum.ResumeLayout(false);
             this.tbMain.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
@@ -348,11 +372,9 @@
         private System.Windows.Forms.ToolStripMenuItem addPhToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.TabControl tbMain;
-        private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ToolStripMenuItem AddFilesMenuItem;
         private ListImgControl.ListImgCtrl imgList;
-        private CalendarControl.CalendarControl AlCal;
         private System.Windows.Forms.ToolStripMenuItem saveMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.TabPage tabPage3;
@@ -362,6 +384,10 @@
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.PictureBox pictImage;
         private System.Windows.Forms.ToolStripStatusLabel sbPictSizeMode;
+        private System.Windows.Forms.Timer tmrSlideShow;
+        private System.Windows.Forms.ToolStripStatusLabel sbSlideShow;
+        private System.Windows.Forms.ToolStripStatusLabel sbTimerIncr;
+        private System.Windows.Forms.ToolStripStatusLabel sbTimerDecr;
     }
 }
 

@@ -116,15 +116,15 @@ namespace AV
                 }
             }
 
-            foreach (ItemInfo itm in hashPh.Values.ToList())
-            {
-                this.AlCal.AddItem(itm);
-            }
+            //foreach (ItemInfo itm in hashPh.Values.ToList())
+            //{
+            //    this.AlCal.AddItem(itm);
+            //}
 
-            foreach (ItemInfo itm in hashAh.Values.ToList())
-            {
-                this.AlCal.AddItem(itm);
-            }
+            //foreach (ItemInfo itm in hashAh.Values.ToList())
+            //{
+            //    this.AlCal.AddItem(itm);
+            //}
 
         }
 
@@ -284,7 +284,7 @@ namespace AV
                 }
 
                 treeAlbums.SelectedNode.Expand();
-                tbMain.SelectedIndex = 3;
+                tbMain.SelectedIndex = 2;
             }
             else if (treeAlbums.SelectedNode.Tag is ph phh)
             {
@@ -292,8 +292,9 @@ namespace AV
                 if (File.Exists(phh.path))
                 {
                     pictImage.ImageLocation = phh.path;
+                    pictImage.Tag = phh;
                     UpdateStatusBar(phh.infoTags ?? phh.id + "(no tags)");
-                    tbMain.SelectedIndex = 3;
+                    tbMain.SelectedIndex = 2;
                 }
                 else
                 {
@@ -324,10 +325,15 @@ namespace AV
                     UpdateStatusBar(msg);
                 }
             }
-            pictImage.ImageLocation = imgViewer.GetCurrentImage().path;
-            pictImage.Refresh();
 
-            tbMain.SelectedIndex = 3;
+            if (treeAlbums.SelectedNode.Nodes.Count > 0)
+            {
+                treeAlbums.SelectedNode = treeAlbums.SelectedNode.Nodes[0];
+            }
+//            pictImage.ImageLocation = imgViewer.GetCurrentImage().path;
+  //          pictImage.Refresh();
+
+            tbMain.SelectedIndex = 2;
         }
 
         public void SaveTags()
@@ -579,14 +585,20 @@ namespace AV
 
         private void UpdateStatusBar(string infoTags)
         {
-            this.sbLabel.Text = infoTags;
+            if (selectedNode != null && selectedNode.Tag != null)
+            {
+                ph phh = (ph)selectedNode.Tag;
+                string info = phh.infoTags ?? string.Empty;
+                this.sbLabel.Text = phh.id + " (" + info.Trim() + ")";
+            }
+
             this.sbPictSizeMode.Text = pictImage.SizeMode.ToString();
         }
 
         private void pictImage_Click(object sender, EventArgs e)
         {
             if (pictImage.Parent == this)
-                pictImage.Parent = tbMain.TabPages[3];
+                pictImage.Parent = tbMain.TabPages[2];
             else
                 pictImage.Parent = this;
 
@@ -638,6 +650,36 @@ namespace AV
                 }
             }
 
+        }
+
+        private void tmrSlideShow_Tick(object sender, EventArgs e)
+        {
+            KeyEventArgs e1 = new KeyEventArgs(Keys.Right);
+            treeAlbums_KeyDown(null,  e1);
+        }
+
+        private void slideShowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tmrSlideShow.Enabled = !tmrSlideShow.Enabled;
+        }
+
+        private void sbSlideShow_Click(object sender, EventArgs e)
+        {
+            tmrSlideShow.Enabled = !tmrSlideShow.Enabled;
+            {
+                sbTimerDecr.Visible = tmrSlideShow.Enabled;
+                sbTimerIncr.Visible = tmrSlideShow.Enabled;
+            }
+        }
+
+        private void sbTimerIncr_Click(object sender, EventArgs e)
+        {
+            tmrSlideShow.Interval += 1000;
+        }
+
+        private void sbTimerDecr_Click(object sender, EventArgs e)
+        {
+            tmrSlideShow.Interval -= 1000;
         }
     }
 }
