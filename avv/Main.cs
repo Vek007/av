@@ -530,6 +530,10 @@ namespace AV
 
                     sbPictSizeMode.Text = pictImage.SizeMode.ToString();
                 }
+                else if ((int)m.WParam == (int)Keys.F1)
+                {
+                    sbSlideShow_Click(null, null);
+                }
                 else if ((int)m.WParam == (int)Keys.F3)
                 {
                     treeAlbums.Visible = true;
@@ -558,7 +562,7 @@ namespace AV
                     curPhh.UpdatePh();
                     Data.RefreshDatabase(curPhh);
                 }
-                else if ((int)m.WParam == (int)Keys.F3)
+                else if ((int)m.WParam == (int)Keys.Back)
                 {
                     Photo curImg = imgViewer.GetCurrentImage();
 
@@ -639,11 +643,14 @@ namespace AV
                     {
                         Debug.WriteLine("<>" + treeAlbums.SelectedNode.Text);
                         treeAlbums.BeginUpdate();
-                        treeAlbums.SelectedNode = treeAlbums.SelectedNode.Parent.Nodes[selectedNode.Index + 1];
-                        selectedNode = treeAlbums.SelectedNode;
-                        treeAlbums.EndUpdate();
-                        treeAlbums.Refresh();
-                        Debug.WriteLine("<>" + treeAlbums.SelectedNode.Text);
+                        if (selectedNode.Index + 1 < selectedNode.Parent.Nodes.Count)
+                        {
+                            treeAlbums.SelectedNode = treeAlbums.SelectedNode.Parent.Nodes[selectedNode.Index + 1];
+                            selectedNode = treeAlbums.SelectedNode;
+                            treeAlbums.EndUpdate();
+                            treeAlbums.Refresh();
+                            Debug.WriteLine("<>" + treeAlbums.SelectedNode.Text);
+                        }
                         e.Handled = true;
 
                     }

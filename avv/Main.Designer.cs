@@ -52,10 +52,10 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.sbLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.sbPictSizeMode = new System.Windows.Forms.ToolStripStatusLabel();
-            this.sbSlideShow = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tmrSlideShow = new System.Windows.Forms.Timer(this.components);
             this.sbTimerIncr = new System.Windows.Forms.ToolStripStatusLabel();
+            this.sbSlideShow = new System.Windows.Forms.ToolStripStatusLabel();
             this.sbTimerDecr = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tmrSlideShow = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.contextMenuAlbum.SuspendLayout();
             this.tbMain.SuspendLayout();
@@ -264,16 +264,16 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.statusStrip1.Dock = System.Windows.Forms.DockStyle.Left;
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sbLabel,
             this.sbPictSizeMode,
             this.sbTimerIncr,
             this.sbSlideShow,
             this.sbTimerDecr});
-            this.statusStrip1.Location = new System.Drawing.Point(904, 24);
+            this.statusStrip1.Location = new System.Drawing.Point(225, 24);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(33, 599);
+            this.statusStrip1.Size = new System.Drawing.Size(21, 599);
             this.statusStrip1.TabIndex = 9;
             this.statusStrip1.Text = "statusStrip1";
             this.statusStrip1.TextDirection = System.Windows.Forms.ToolStripTextDirection.Vertical90;
@@ -291,6 +291,17 @@
             this.sbPictSizeMode.Size = new System.Drawing.Size(31, 61);
             this.sbPictSizeMode.Text = "Pict Mode";
             // 
+            // sbTimerIncr
+            // 
+            this.sbTimerIncr.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.sbTimerIncr.Name = "sbTimerIncr";
+            this.sbTimerIncr.Size = new System.Drawing.Size(31, 19);
+            this.sbTimerIncr.Text = "+";
+            this.sbTimerIncr.Visible = false;
+            this.sbTimerIncr.Click += new System.EventHandler(this.sbTimerIncr_Click);
+            // 
             // sbSlideShow
             // 
             this.sbSlideShow.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
@@ -303,22 +314,6 @@
             this.sbSlideShow.Text = "Slide Show";
             this.sbSlideShow.Click += new System.EventHandler(this.sbSlideShow_Click);
             // 
-            // tmrSlideShow
-            // 
-            this.tmrSlideShow.Interval = 3000;
-            this.tmrSlideShow.Tick += new System.EventHandler(this.tmrSlideShow_Tick);
-            // 
-            // sbTimerIncr
-            // 
-            this.sbTimerIncr.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.sbTimerIncr.Name = "sbTimerIncr";
-            this.sbTimerIncr.Size = new System.Drawing.Size(31, 19);
-            this.sbTimerIncr.Text = "+";
-            this.sbTimerIncr.Visible = false;
-            this.sbTimerIncr.Click += new System.EventHandler(this.sbTimerIncr_Click);
-            // 
             // sbTimerDecr
             // 
             this.sbTimerDecr.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
@@ -329,6 +324,11 @@
             this.sbTimerDecr.Text = " - ";
             this.sbTimerDecr.Visible = false;
             this.sbTimerDecr.Click += new System.EventHandler(this.sbTimerDecr_Click);
+            // 
+            // tmrSlideShow
+            // 
+            this.tmrSlideShow.Interval = 3000;
+            this.tmrSlideShow.Tick += new System.EventHandler(this.tmrSlideShow_Tick);
             // 
             // Main
             // 
