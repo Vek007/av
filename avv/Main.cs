@@ -162,35 +162,6 @@ namespace AV
         /// <param name="e"></param>
         private void OnMouseUp(object sender, MouseEventArgs e)
         {
-            // We are only interested in right mouse clicks
-            if(e.Button == MouseButtons.Right)
-            {
-                // Attempt to get the node the mouse clicked on
-                TreeNode node = treeAlbums.GetNodeAt(e.X, e.Y);
-                if(node != null)
-                {
-                    // Select the tree item
-                    treeAlbums.SelectedNode = node;
-
-                    // Check what type of node was clicked and edit
-                    // context menu
-                    if(node.Tag is Ph)
-                    {
-                        contextMenuAlbum.Items[0].Visible = false;
-                    }
-                    else
-                    {
-                        contextMenuAlbum.Items[0].Visible = true;
-                    }
-
-                    if (node.Tag != null)
-                    {
-                        ph ph1 = (ph)node.Tag;
-                        imgList.Select();
-                        imgList.SelectImage(ph1.path);
-                    }
-                }
-            }
         }
 
         #endregion
@@ -338,20 +309,32 @@ namespace AV
 
         public void SaveTags()
         {
-            foreach (ImageListViewItem itm in imgList.GetImgs())
+            var allNodes = treeAlbums.Nodes
+                        .Cast<TreeNode>()
+                        .SelectMany(GetNodeBranch);
+
+            foreach (TreeNode itm in allNodes)
             {
                 if (itm.Tag != null)
                 {
                     ph img = (ph)itm.Tag;
 
-                    if (img.infoTags != itm.InfoTags && itm.InfoTags.Trim().Length > 0)
+                    if (img.infoTags != null )
                     {
-                        img.infoTags = itm.InfoTags;
                         img.UpdatePh();
                         Data.RefreshDatabase(img);
                     }
                 }
             }
+        }
+
+        private IEnumerable<TreeNode> GetNodeBranch(TreeNode node)
+        {
+            yield return node;
+
+            foreach (TreeNode child in node.Nodes)
+                foreach (var childChild in GetNodeBranch(child))
+                    yield return childChild;
         }
 
         /// <summary>
@@ -485,7 +468,6 @@ namespace AV
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             SaveTags();
-            imgList.ClearImages();
         }
 
         protected override bool ProcessKeyPreview(ref Message m)
@@ -516,6 +498,8 @@ namespace AV
                 else if ((int)m.WParam == (int)Keys.F2)
                 {
                     treeAlbums.Visible = false;
+                    menuStrip1.Visible = false;
+                    statusStrip1.Visible = false;
                     tbMain.Width += treeAlbums.Width;
                     tbMain.Left = 0;
                     imgViewer.HidePanels(true);
@@ -536,11 +520,17 @@ namespace AV
                 }
                 else if ((int)m.WParam == (int)Keys.F3)
                 {
+                    menuStrip1.Visible = true;
+                    statusStrip1.Visible = true;
                     treeAlbums.Visible = true;
                     tbMain.Width -= treeAlbums.Width;
                     tbMain.Left = treeAlbums.Width + 5;
 
                     imgViewer.HidePanels(false);
+                }
+                else if ((int)m.WParam == (int)Keys.F12)
+                {
+                    sbSlideShow_Click(null, null);
                 }
                 else if (char.IsLetter((char)m.WParam) || char.IsDigit((char)m.WParam))
                 {
@@ -597,6 +587,7 @@ namespace AV
             }
 
             this.sbPictSizeMode.Text = pictImage.SizeMode.ToString();
+            this.Text = this.sbLabel.Text + " - " + this.sbPictSizeMode.Text;
         }
 
         private void pictImage_Click(object sender, EventArgs e)
