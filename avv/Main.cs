@@ -497,6 +497,8 @@ namespace AV
                 }
                 else if ((int)m.WParam == (int)Keys.F2)
                 {
+                    this.WindowState = FormWindowState.Maximized;
+                    this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
                     treeAlbums.Visible = false;
                     menuStrip1.Visible = false;
                     statusStrip1.Visible = false;
@@ -520,7 +522,7 @@ namespace AV
                 }
                 else if ((int)m.WParam == (int)Keys.F3)
                 {
-                    menuStrip1.Visible = true;
+                    menuStrip1.Visible = true; this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
                     statusStrip1.Visible = true;
                     treeAlbums.Visible = true;
                     tbMain.Width -= treeAlbums.Width;
@@ -593,7 +595,7 @@ namespace AV
         private void pictImage_Click(object sender, EventArgs e)
         {
             if (pictImage.Parent == this)
-                pictImage.Parent = tbMain.TabPages[2];
+                pictImage.Parent = tbMain.TabPages[1];
             else
                 pictImage.Parent = this;
 
