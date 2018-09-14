@@ -558,6 +558,9 @@ namespace AV
 
                     curPhh.UpdatePh();
                     Data.RefreshDatabase(curPhh);
+                    pictImage.Invalidate();
+
+
                 }
                 else if ((int)m.WParam == (int)Keys.Back)
                 {
@@ -576,7 +579,7 @@ namespace AV
 
                     curPhh.UpdatePh();
                     Data.RefreshDatabase(curPhh);
-
+                    pictImage.Invalidate();
                 }
 
 
