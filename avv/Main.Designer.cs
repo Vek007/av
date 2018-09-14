@@ -44,6 +44,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tbMain = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.imgViewer = new KaiwaProjects.KpImageViewer();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.pictImage = new System.Windows.Forms.PictureBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -53,7 +54,6 @@
             this.sbSlideShow = new System.Windows.Forms.ToolStripStatusLabel();
             this.sbTimerDecr = new System.Windows.Forms.ToolStripStatusLabel();
             this.tmrSlideShow = new System.Windows.Forms.Timer(this.components);
-            this.imgViewer = new KaiwaProjects.KpImageViewer();
             this.menuStrip1.SuspendLayout();
             this.contextMenuAlbum.SuspendLayout();
             this.tbMain.SuspendLayout();
@@ -188,6 +188,34 @@
             this.tabPage3.Text = "Viewer";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // imgViewer
+            // 
+            this.imgViewer.BackgroundColor = System.Drawing.Color.Black;
+            this.imgViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.imgViewer.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.imgViewer.GifAnimation = false;
+            this.imgViewer.GifFPS = 15D;
+            this.imgViewer.Image = null;
+            this.imgViewer.Location = new System.Drawing.Point(3, 3);
+            this.imgViewer.MenuColor = System.Drawing.Color.LightSteelBlue;
+            this.imgViewer.MenuPanelColor = System.Drawing.Color.LightSteelBlue;
+            this.imgViewer.MinimumSize = new System.Drawing.Size(454, 157);
+            this.imgViewer.Name = "imgViewer";
+            this.imgViewer.NavigationPanelColor = System.Drawing.Color.LightSteelBlue;
+            this.imgViewer.NavigationTextColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.imgViewer.OpenButton = false;
+            this.imgViewer.PreviewButton = false;
+            this.imgViewer.PreviewPanelColor = System.Drawing.Color.LightSteelBlue;
+            this.imgViewer.PreviewText = "Preview";
+            this.imgViewer.PreviewTextColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.imgViewer.Rotation = 0;
+            this.imgViewer.Scrollbars = false;
+            this.imgViewer.ShowPreview = true;
+            this.imgViewer.Size = new System.Drawing.Size(698, 567);
+            this.imgViewer.TabIndex = 0;
+            this.imgViewer.TextColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.imgViewer.Zoom = 100D;
+            // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.pictImage);
@@ -209,6 +237,7 @@
             this.pictImage.TabIndex = 0;
             this.pictImage.TabStop = false;
             this.pictImage.Click += new System.EventHandler(this.pictImage_Click);
+            this.pictImage.Paint += new System.Windows.Forms.PaintEventHandler(this.pictImage_Paint);
             // 
             // statusStrip1
             // 
@@ -277,34 +306,6 @@
             // 
             this.tmrSlideShow.Interval = 3000;
             this.tmrSlideShow.Tick += new System.EventHandler(this.tmrSlideShow_Tick);
-            // 
-            // imgViewer
-            // 
-            this.imgViewer.BackgroundColor = System.Drawing.Color.Black;
-            this.imgViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.imgViewer.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.imgViewer.GifAnimation = false;
-            this.imgViewer.GifFPS = 15D;
-            this.imgViewer.Image = null;
-            this.imgViewer.Location = new System.Drawing.Point(3, 3);
-            this.imgViewer.MenuColor = System.Drawing.Color.LightSteelBlue;
-            this.imgViewer.MenuPanelColor = System.Drawing.Color.LightSteelBlue;
-            this.imgViewer.MinimumSize = new System.Drawing.Size(454, 157);
-            this.imgViewer.Name = "imgViewer";
-            this.imgViewer.NavigationPanelColor = System.Drawing.Color.LightSteelBlue;
-            this.imgViewer.NavigationTextColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.imgViewer.OpenButton = true;
-            this.imgViewer.PreviewButton = true;
-            this.imgViewer.PreviewPanelColor = System.Drawing.Color.LightSteelBlue;
-            this.imgViewer.PreviewText = "Preview";
-            this.imgViewer.PreviewTextColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.imgViewer.Rotation = 0;
-            this.imgViewer.Scrollbars = false;
-            this.imgViewer.ShowPreview = true;
-            this.imgViewer.Size = new System.Drawing.Size(698, 567);
-            this.imgViewer.TabIndex = 0;
-            this.imgViewer.TextColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.imgViewer.Zoom = 100D;
             // 
             // Main
             // 

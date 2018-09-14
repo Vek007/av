@@ -681,5 +681,16 @@ namespace AV
         {
             tmrSlideShow.Interval -= 1000;
         }
+
+        private void pictImage_Paint(object sender, PaintEventArgs e)
+        {
+            if (treeAlbums.SelectedNode.Tag is ph phh)
+            {
+                if (phh.infoTags != null && phh.infoTags.ToUpper().Contains("D"))
+                {
+                    e.Graphics.DrawIcon(AlbumViewer.Properties.Resources.delete, 0, 0);
+                }
+            }
+        }
     }
 }
