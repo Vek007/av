@@ -534,6 +534,11 @@ namespace AV
                 {
                     sbSlideShow_Click(null, null);
                 }
+                else if ((int)m.WParam == (int)Keys.F5)
+                {
+                    showIcons = !showIcons;
+                    pictImage.Invalidate();
+                }
                 else if (char.IsLetter((char)m.WParam) || char.IsDigit((char)m.WParam))
                 {
                     Debug.WriteLine(m.WParam.ToString());
@@ -578,6 +583,8 @@ namespace AV
             }
             return base.ProcessKeyPreview(ref m);
         }
+
+        bool showIcons = false;
 
         private void UpdateStatusBar(string infoTags)
         {
@@ -686,7 +693,7 @@ namespace AV
         {
             if (treeAlbums.SelectedNode.Tag is ph phh)
             {
-                if (phh.infoTags != null && phh.infoTags.ToUpper().Contains("D"))
+                if (phh.infoTags != null && phh.infoTags.ToUpper().Contains("D") && showIcons)
                 {
                     e.Graphics.DrawIcon(AlbumViewer.Properties.Resources.delete, 0, 0);
                 }
