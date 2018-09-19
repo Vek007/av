@@ -14,6 +14,7 @@ using System.Diagnostics;
 using KaiwaProjects;
 using System.IO;
 using System.Globalization;
+using AlbumViewer;
 
 namespace AV
 {
@@ -49,6 +50,7 @@ namespace AV
 
         private void LoadAls()
         {
+            treeAlbums.Nodes.Clear();
             List<string> lstYears = Data.GetDistinctPhYears();
             foreach (string year in lstYears)
             {
@@ -73,6 +75,28 @@ namespace AV
                 treeAlbums.Nodes.Add(yearNode);
             }
         }
+
+        private void LoadAls(DateTime stDate, DateTime endDate)
+        {
+            treeAlbums.Nodes.Clear();
+            DateTime sDate = stDate;
+            while (sDate <= endDate)
+            {
+                TreeNode dtNode = new TreeNode(sDate.ToString("dd-MMM-yyyy"));
+                List<ph> phs = Data.GetPhByDate(sDate);
+
+                foreach (ph p in phs)
+                {
+                    TreeNode pNode = new TreeNode(p.id + "(" + p.time_stamp.Value.Day.ToString() + ")");
+                    pNode.Tag = p;
+
+                    dtNode.Nodes.Add(pNode);
+                }
+                treeAlbums.Nodes.Add(dtNode);
+                sDate=sDate.AddDays(1);
+            }
+        }
+
 
         private void LoadCal()
         {
@@ -534,6 +558,20 @@ namespace AV
                 {
                     sbSlideShow_Click(null, null);
                 }
+                else if ((int)m.WParam == (int)Keys.F4)
+                {
+                    DatePicker dp = new DatePicker();
+                    if (dp.ShowDialog() == DialogResult.OK)
+                    {
+                        DateTime stDt = dp.StartDate;
+                        DateTime enDt = dp.EndDate;
+
+                        if (!dp.ResetDate)
+                            LoadAls(stDt, enDt);
+                        else
+                            LoadAls();
+                    }
+                }
                 else if ((int)m.WParam == (int)Keys.F5)
                 {
                     showIcons = !showIcons;
@@ -559,8 +597,6 @@ namespace AV
                     curPhh.UpdatePh();
                     Data.RefreshDatabase(curPhh);
                     pictImage.Invalidate();
-
-
                 }
                 else if ((int)m.WParam == (int)Keys.Back)
                 {

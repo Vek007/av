@@ -96,6 +96,19 @@ namespace AV
             return phList;
         }
 
+        public static List<ph> GetPhByStartAndEndDate(DateTime stDate, DateTime endDate)
+        {
+            List<ph> phList = alDb.phs.Where(p => p.time_stamp.Value >= stDate && p.time_stamp.Value <= endDate).OrderBy(p => p.time_stamp.Value).ToList();
+
+            return phList;
+        }
+
+        public static List<ph> GetPhByDate(DateTime date)
+        {
+            List<ph> phList = alDb.phs.Where(p => p.time_stamp.Value.Year == date.Year && p.time_stamp.Value.Month == date.Month && p.time_stamp.Value.Day== date.Day).OrderBy(p => p.time_stamp.Value).ToList();
+
+            return phList;
+        }
 
         public static List<string> GetDistinctPhYears()
         {

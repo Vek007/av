@@ -120,6 +120,12 @@
       <DependentUpon>AlPh.edmx</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\Data.cs" />
+    <Compile Include="DatePicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DatePicker.Designer.cs">
+      <DependentUpon>DatePicker.cs</DependentUpon>
+    </Compile>
     <Compile Include="DBExecutor.cs" />
     <Compile Include="Entities\Al.cs" />
     <Compile Include="Entities\Ph.cs" />
@@ -136,6 +142,9 @@
     <Compile Include="PhIterator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DatePicker.resx">
+      <DependentUpon>DatePicker.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
