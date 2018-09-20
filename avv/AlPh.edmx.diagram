@@ -8,6 +8,8 @@
         <EntityTypeShape EntityType="alvModel.al" Width="1.5" PointX="0.75" PointY="1.25" />
         <EntityTypeShape EntityType="alvModel.ph" Width="1.5" PointX="3" PointY="1" />
         <AssociationConnector Association="alvModel.ph_al" />
+        <EntityTypeShape EntityType="alvModel.dup_ph" Width="1.5" PointX="5.25" PointY="1.5" />
+        <AssociationConnector Association="alvModel.FK_dup_ph_dup_ph" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -18,6 +18,7 @@ namespace AV
         public ph()
         {
             this.als = new HashSet<al>();
+            this.dup_ph = new HashSet<dup_ph>();
         }
     
         public string id { get; set; }
@@ -30,5 +31,7 @@ namespace AV
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<al> als { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<dup_ph> dup_ph { get; set; }
     }
 }

@@ -5,52 +5,64 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 
 namespace AV
 {
     public static class PhIterator
     {
-        public static void IterateAndSave(string rootPath)
+        public static void IterateAndSave(string rootPath, Main parent)
         {
             string[] allFiles = Directory.EnumerateFiles(rootPath, "*.JPG", SearchOption.AllDirectories).ToArray();
+
+            if (parent != null)
+            {
+                parent.Invoke((MethodInvoker)(() =>
+                {
+                    parent.ShowProgressBar(true);
+                }));
+            }
 
             foreach (string filename in allFiles)
             {
 
                 List<string> als = GetFoldersNames(Path.GetDirectoryName(filename));
 
-                foreach (string al in als)
-                {
-                    Data.AddAl(al);
-                }
-
-                Ph p = new Ph();
-                p.Id = Path.GetFileNameWithoutExtension(filename);
-                p.FilePath = filename;
-                p.Name = p.Id;
+                ph p = new ph();
+                p.id = Path.GetFileNameWithoutExtension(filename);
+                p.path = filename;
+                p.name = p.id;
 
                 FileInfo fi = new FileInfo(filename);
-                p.CreationDate = fi.LastWriteTime;
+                p.time_stamp = fi.LastWriteTime;
 
                 GetMeta(fi, ref p);
 
-                Data.AddPh(p);
-                foreach (string al in als)
-                {
-                    Data.AddAP(al,p.Id);
-                }
+                if (!Data.ExistsAsRecord(p))
+                    Data.AddPh(p);
+                else
+                    Data.AddPhAsDup(p);
             }
+
+            if (parent != null)
+            {
+                parent.Invoke((MethodInvoker)(() =>
+                {
+                    parent.ShowProgressBar(false);
+                }));
+            }
+
         }
 
-        public static void GetMeta(FileInfo f, ref Ph p)
+        public static void GetMeta(FileInfo f, ref ph p)
         {
             using (FileStream fs = new FileStream(f.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 BitmapSource img = BitmapFrame.Create(fs);
                 BitmapMetadata md = (BitmapMetadata)img.Metadata;
-                p.CreationDate = md.DateTaken == null ? f.CreationTime : DateTime.Parse(md.DateTaken);
-                p.Description = md.Subject;
+                p.time_stamp = md.DateTaken == null ? f.CreationTime : DateTime.Parse(md.DateTaken);
+                p.description = md.Subject;
             }
         }
 

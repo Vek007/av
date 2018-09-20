@@ -29,6 +29,7 @@ namespace AV
     
         public virtual DbSet<al> als { get; set; }
         public virtual DbSet<ph> phs { get; set; }
+        public virtual DbSet<dup_ph> dup_ph { get; set; }
     
         public virtual int DeleteAlbum(Nullable<int> id)
         {

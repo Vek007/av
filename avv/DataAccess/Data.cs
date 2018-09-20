@@ -89,6 +89,24 @@ namespace AV
             return albums.AsReadOnly();
         }
 
+        internal static void AddPhAsDup(ph p)
+        {
+            Data.alDb.dup_ph.Add(p);
+            RefreshDatabase(p);
+        }
+
+        public static bool ExistsAsRecord(ph p)
+        {
+            if (alDb.phs.Where(p1 => p1.id.Trim() == p.id.Trim()).Count() > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public static List<ph> GetPhByMonthsAndYear(int year, int month)
         {
             List<ph> phList = alDb.phs.Where(p => p.time_stamp.Value.Year == year && p.time_stamp.Value.Month == month).OrderBy(p => p.time_stamp.Value).ToList();
@@ -208,12 +226,15 @@ namespace AV
         /// Add Ph to Al
         /// </summary>
         /// <param name="albumId">Id of Album to add Ph to</param>
-        /// <param name="Ph">Ph to add</param>
-        public static void AddPh(Ph Ph)
+        /// <param name="p">Ph to add</param>
+        public static void AddPh(ph p)
         {
-            string sqlInsert = "Insert into ph (id, name, description,path,time_stamp) values ('"+ Ph.Id + "','" +Ph.Name + "','" + Ph.Description + "','" + Ph.FilePath + "','" + Ph.CreationDate+"')";
+            Data.alDb.phs.Add(p);
+            RefreshDatabase(p);
 
-            DBExecutor.ExecuteCommand(sqlInsert);
+            //string sqlInsert = "Insert into ph (id, name, description,path,time_stamp) values ('"+ p.Id + "','" +p.Name + "','" + p.Description + "','" + p.FilePath + "','" + p.CreationDate+"')";
+
+            //DBExecutor.ExecuteCommand(sqlInsert);
         }
 
         public static void AddAl(string id)

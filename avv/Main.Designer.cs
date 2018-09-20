@@ -54,6 +54,7 @@
             this.sbSlideShow = new System.Windows.Forms.ToolStripStatusLabel();
             this.sbTimerDecr = new System.Windows.Forms.ToolStripStatusLabel();
             this.tmrSlideShow = new System.Windows.Forms.Timer(this.components);
+            this.pgFilesAdd = new System.Windows.Forms.ProgressBar();
             this.menuStrip1.SuspendLayout();
             this.contextMenuAlbum.SuspendLayout();
             this.tbMain.SuspendLayout();
@@ -307,11 +308,22 @@
             this.tmrSlideShow.Interval = 3000;
             this.tmrSlideShow.Tick += new System.EventHandler(this.tmrSlideShow_Tick);
             // 
+            // pgFilesAdd
+            // 
+            this.pgFilesAdd.Location = new System.Drawing.Point(752, 4);
+            this.pgFilesAdd.Name = "pgFilesAdd";
+            this.pgFilesAdd.Size = new System.Drawing.Size(184, 18);
+            this.pgFilesAdd.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.pgFilesAdd.TabIndex = 10;
+            this.pgFilesAdd.Visible = false;
+            this.pgFilesAdd.Click += new System.EventHandler(this.pgFilesAdd_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(937, 623);
+            this.Controls.Add(this.pgFilesAdd);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tbMain);
             this.Controls.Add(this.treeAlbums);
@@ -362,6 +374,7 @@
         private System.Windows.Forms.ToolStripStatusLabel sbTimerIncr;
         private System.Windows.Forms.ToolStripStatusLabel sbTimerDecr;
         private KaiwaProjects.KpImageViewer imgViewer;
+        private System.Windows.Forms.ProgressBar pgFilesAdd;
     }
 }
 

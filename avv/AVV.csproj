@@ -127,6 +127,9 @@
       <DependentUpon>DatePicker.cs</DependentUpon>
     </Compile>
     <Compile Include="DBExecutor.cs" />
+    <Compile Include="dup_ph.cs">
+      <DependentUpon>AlPh.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Al.cs" />
     <Compile Include="Entities\Ph.cs" />
     <Compile Include="ExtensionMethods.cs" />

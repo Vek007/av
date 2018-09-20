@@ -30,7 +30,12 @@ namespace AV
             tbMain.KeyDown += treeAlbums_KeyDown;
         }
 
-
+        bool bFileAdd = false;
+        internal void ShowProgressBar(bool v)
+        {
+            bFileAdd = v;
+            this.pgFilesAdd.Visible = v;
+        }
 
         private void OnMouseWheel(object sender, MouseEventArgs e)
         {
@@ -465,8 +470,8 @@ namespace AV
             fbd.SelectedPath = "c:\\";
             if (fbd.ShowDialog() == DialogResult.OK)
             {
-                string filename = fbd.SelectedPath;
-                Thread thread = new Thread(() => AV.PhIterator.IterateAndSave(filename));
+                string fldName = fbd.SelectedPath;
+                Thread thread = new Thread(() => AV.PhIterator.IterateAndSave(fldName,this));
                 thread.Start();
             }
         }
@@ -526,6 +531,7 @@ namespace AV
                     treeAlbums.Visible = false;
                     menuStrip1.Visible = false;
                     statusStrip1.Visible = false;
+                    pgFilesAdd.Visible = false;
                     tbMain.Width += treeAlbums.Width;
                     tbMain.Left = 0;
                     imgViewer.HidePanels(true);
@@ -546,7 +552,9 @@ namespace AV
                 }
                 else if ((int)m.WParam == (int)Keys.F3)
                 {
-                    menuStrip1.Visible = true; this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+                    menuStrip1.Visible = true;
+                    pgFilesAdd.Visible = bFileAdd;
+                    this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
                     statusStrip1.Visible = true;
                     treeAlbums.Visible = true;
                     tbMain.Width -= treeAlbums.Width;
@@ -737,6 +745,11 @@ namespace AV
                     e.Graphics.DrawIcon(AlbumViewer.Properties.Resources.delete, 0, 0);
                 }
             }
+        }
+
+        private void pgFilesAdd_Click(object sender, EventArgs e)
+        {
+            pgFilesAdd.Visible = false;
         }
     }
 }

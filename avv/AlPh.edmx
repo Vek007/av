@@ -16,6 +16,14 @@
           <Property Name="g" Type="int" />
           <Property Name="b" Type="int" />
         </EntityType>
+        <EntityType Name="dup_ph">
+          <Key>
+            <PropertyRef Name="pkey" />
+          </Key>
+          <Property Name="pkey" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="varchar" MaxLength="255" />
+          <Property Name="path" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="ph">
           <Key>
             <PropertyRef Name="id" />
@@ -28,35 +36,15 @@
           <Property Name="time_stamp" Type="datetimeoffset" Precision="7" />
           <Property Name="infoTags" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="ph_al">
-          <Key>
-            <PropertyRef Name="ph_id" />
-            <PropertyRef Name="al_id" />
-          </Key>
-          <Property Name="ph_id" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="al_id" Type="varchar" MaxLength="255" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_ph_al_ph">
-          <End Role="al" Type="Self.al" Multiplicity="1" />
-          <End Role="ph_al" Type="Self.ph_al" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="al">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="ph_al">
-              <PropertyRef Name="al_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ph_al_ph1">
-          <End Role="ph" Type="Self.ph" Multiplicity="1" />
-          <End Role="ph_al" Type="Self.ph_al" Multiplicity="*" />
+        <Association Name="FK_dup_ph_dup_ph">
+          <End Role="ph" Type="Self.ph" Multiplicity="0..1" />
+          <End Role="dup_ph" Type="Self.dup_ph" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ph">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="ph_al">
-              <PropertyRef Name="ph_id" />
+            <Dependent Role="dup_ph">
+              <PropertyRef Name="id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -95,15 +83,11 @@
         </Function>
         <EntityContainer Name="alvModelStoreContainer">
           <EntitySet Name="al" EntityType="Self.al" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dup_ph" EntityType="Self.dup_ph" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ph" EntityType="Self.ph" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ph_al" EntityType="Self.ph_al" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_ph_al_ph" Association="Self.FK_ph_al_ph">
-            <End Role="al" EntitySet="al" />
-            <End Role="ph_al" EntitySet="ph_al" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ph_al_ph1" Association="Self.FK_ph_al_ph1">
+          <AssociationSet Name="FK_dup_ph_dup_ph" Association="Self.FK_dup_ph_dup_ph">
             <End Role="ph" EntitySet="ph" />
-            <End Role="ph_al" EntitySet="ph_al" />
+            <End Role="dup_ph" EntitySet="dup_ph" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -150,6 +134,11 @@
             <End Role="al" EntitySet="als" />
             <End Role="ph" EntitySet="phs" />
           </AssociationSet>
+          <EntitySet Name="dup_ph" EntityType="alvModel.dup_ph" />
+          <AssociationSet Name="FK_dup_ph_dup_ph" Association="alvModel.FK_dup_ph_dup_ph">
+            <End Role="ph" EntitySet="phs" />
+            <End Role="dup_ph" EntitySet="dup_ph" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="al">
           <Key>
@@ -175,10 +164,32 @@
           <Property Name="time_stamp" Type="DateTimeOffset" Precision="7" />
           <NavigationProperty Name="als" Relationship="alvModel.ph_al" FromRole="ph" ToRole="al" />
           <Property Name="infoTags" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="dup_ph" Relationship="alvModel.FK_dup_ph_dup_ph" FromRole="ph" ToRole="dup_ph" />
         </EntityType>
         <Association Name="ph_al">
           <End Type="alvModel.al" Role="al" Multiplicity="*" />
           <End Type="alvModel.ph" Role="ph" Multiplicity="*" />
+        </Association>
+        <EntityType Name="dup_ph">
+          <Key>
+            <PropertyRef Name="pkey" />
+          </Key>
+          <Property Name="pkey" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="path" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ph" Relationship="alvModel.FK_dup_ph_dup_ph" FromRole="dup_ph" ToRole="ph" />
+        </EntityType>
+        <Association Name="FK_dup_ph_dup_ph">
+          <End Type="alvModel.ph" Role="ph" Multiplicity="0..1" />
+          <End Type="alvModel.dup_ph" Role="dup_ph" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ph">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="dup_ph">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -220,14 +231,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="ph_al" TypeName="alvModel.ph_al" StoreEntitySet="ph_al">
-            <EndProperty Name="ph">
-              <ScalarProperty Name="id" ColumnName="ph_id" />
-            </EndProperty>
-            <EndProperty Name="al">
-              <ScalarProperty Name="id" ColumnName="al_id" />
-            </EndProperty>
-          </AssociationSetMapping>
+          <EntitySetMapping Name="dup_ph">
+            <EntityTypeMapping TypeName="alvModel.dup_ph">
+              <MappingFragment StoreEntitySet="dup_ph">
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="pkey" ColumnName="pkey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
