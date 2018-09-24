@@ -5,17 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="alvModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="al">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="description" Type="nvarchar" MaxLength="200" />
-          <Property Name="r" Type="int" />
-          <Property Name="g" Type="int" />
-          <Property Name="b" Type="int" />
-        </EntityType>
         <EntityType Name="dup_ph">
           <Key>
             <PropertyRef Name="pkey" />
@@ -82,7 +71,6 @@
           <Parameter Name="desc" Type="nvarchar" Mode="In" />
         </Function>
         <EntityContainer Name="alvModelStoreContainer">
-          <EntitySet Name="al" EntityType="Self.al" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="dup_ph" EntityType="Self.dup_ph" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ph" EntityType="Self.ph" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dup_ph_dup_ph" Association="Self.FK_dup_ph_dup_ph">
@@ -128,30 +116,13 @@
             <Parameter Name="name" Mode="In" Type="String" />
             <Parameter Name="desc" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="als" EntityType="alvModel.al" />
           <EntitySet Name="phs" EntityType="alvModel.ph" />
-          <AssociationSet Name="ph_al" Association="alvModel.ph_al">
-            <End Role="al" EntitySet="als" />
-            <End Role="ph" EntitySet="phs" />
-          </AssociationSet>
           <EntitySet Name="dup_ph" EntityType="alvModel.dup_ph" />
           <AssociationSet Name="FK_dup_ph_dup_ph" Association="alvModel.FK_dup_ph_dup_ph">
             <End Role="ph" EntitySet="phs" />
             <End Role="dup_ph" EntitySet="dup_ph" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="al">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="phs" Relationship="alvModel.ph_al" FromRole="al" ToRole="ph" />
-          <Property Name="r" Type="Int32" />
-          <Property Name="g" Type="Int32" />
-          <Property Name="b" Type="Int32" />
-        </EntityType>
         <EntityType Name="ph">
           <Key>
             <PropertyRef Name="id" />
@@ -162,14 +133,9 @@
           <Property Name="photo" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="path" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="time_stamp" Type="DateTimeOffset" Precision="7" />
-          <NavigationProperty Name="als" Relationship="alvModel.ph_al" FromRole="ph" ToRole="al" />
           <Property Name="infoTags" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="dup_ph" Relationship="alvModel.FK_dup_ph_dup_ph" FromRole="ph" ToRole="dup_ph" />
         </EntityType>
-        <Association Name="ph_al">
-          <End Type="alvModel.al" Role="al" Multiplicity="*" />
-          <End Type="alvModel.ph" Role="ph" Multiplicity="*" />
-        </Association>
         <EntityType Name="dup_ph">
           <Key>
             <PropertyRef Name="pkey" />
@@ -206,18 +172,6 @@
           <FunctionImportMapping FunctionImportName="InsertPhoto" FunctionName="alvModel.Store.InsertPhoto" />
           <FunctionImportMapping FunctionImportName="UpdateAlbum" FunctionName="alvModel.Store.UpdateAlbum" />
           <FunctionImportMapping FunctionImportName="UpdatePhoto" FunctionName="alvModel.Store.UpdatePhoto" />
-          <EntitySetMapping Name="als">
-            <EntityTypeMapping TypeName="alvModel.al">
-              <MappingFragment StoreEntitySet="al">
-                <ScalarProperty Name="b" ColumnName="b" />
-                <ScalarProperty Name="g" ColumnName="g" />
-                <ScalarProperty Name="r" ColumnName="r" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="phs">
             <EntityTypeMapping TypeName="alvModel.ph">
               <MappingFragment StoreEntitySet="ph">

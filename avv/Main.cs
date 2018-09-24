@@ -14,7 +14,7 @@ using System.Diagnostics;
 using KaiwaProjects;
 using System.IO;
 using System.Globalization;
-using AlbumViewer;
+using AV;
 
 namespace AV
 {
@@ -34,7 +34,7 @@ namespace AV
         internal void ShowProgressBar(bool v)
         {
             bFileAdd = v;
-            this.pgFilesAdd.Visible = v;
+            this.stpgFiles.Visible = v;
         }
 
         private void OnMouseWheel(object sender, MouseEventArgs e)
@@ -102,60 +102,6 @@ namespace AV
             }
         }
 
-
-        private void LoadCal()
-        {
-            List<ph> allPhs = Data.GetPhs();
-
-            Dictionary<string, ItemInfo> hashPh = new Dictionary<string, ItemInfo>();
-            Dictionary<string, ItemInfo> hashAh = new Dictionary<string, ItemInfo>();
-
-            foreach (ph pho in allPhs)
-            {
-                ItemInfo phInfo = new ItemInfo
-                {
-                    StartTime = pho.time_stamp.Value.DateTime
-                };
-                TimeSpan ts = new TimeSpan(10, 30, 0);
-                phInfo.StartTime = phInfo.StartTime.Date + ts;
-                phInfo.EndTime = phInfo.StartTime.AddMinutes(30);
-                phInfo.Text = "pic";
-                phInfo.R = 150;
-                phInfo.G = 100;
-                phInfo.B = 50;
-
-                if (!hashPh.ContainsKey(phInfo.StartTime.ToShortDateString()))
-                {
-                    hashPh.Add(phInfo.StartTime.ToShortDateString(), phInfo);
-                    int i = 2;
-                    foreach(al alm in pho.als)
-                    {
-                        if (!hashAh.ContainsKey(alm.name))
-                        {
-                            ItemInfo alInfo = new ItemInfo();
-                            alInfo.Text = alm.name;
-                            alInfo.StartTime = phInfo.StartTime.AddHours(i); i++;
-                            alInfo.EndTime = alInfo.StartTime.AddMinutes(30);
-                            alInfo.R = alm.r ?? 0;
-                            alInfo.G = alm.g ?? 0;
-                            alInfo.B = alm.b ?? 0;
-                            hashAh.Add(alm.name+alInfo.StartTime.ToShortDateString(), alInfo);
-                        }
-                    }
-                }
-            }
-
-            //foreach (ItemInfo itm in hashPh.Values.ToList())
-            //{
-            //    this.AlCal.AddItem(itm);
-            //}
-
-            //foreach (ItemInfo itm in hashAh.Values.ToList())
-            //{
-            //    this.AlCal.AddItem(itm);
-            //}
-
-        }
 
         #region Menu Events Handlers
 
@@ -283,8 +229,7 @@ namespace AV
                         LoadImageList(treeAlbums.SelectedNode.Nodes[0]);
                 }
 
-                treeAlbums.SelectedNode.Expand();
-                tbMain.SelectedIndex = 2;
+                tbMain.SelectedIndex = 1;
             }
             else if (treeAlbums.SelectedNode.Tag is ph phh)
             {
@@ -463,17 +408,8 @@ namespace AV
             //DisplayDescription.Visible = true;
         }
 
-        private void AddFilesMenuItem_Click(object sender, EventArgs e)
+        private void AddFilesMenuItem_Click1(object sender, EventArgs e)
         {
-            int i = 0;
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.SelectedPath = "c:\\";
-            if (fbd.ShowDialog() == DialogResult.OK)
-            {
-                string fldName = fbd.SelectedPath;
-                Thread thread = new Thread(() => AV.PhIterator.IterateAndSave(fldName,this));
-                thread.Start();
-            }
         }
 
         private void saveMenuItem_Click(object sender, EventArgs e)
@@ -529,9 +465,8 @@ namespace AV
                     this.WindowState = FormWindowState.Maximized;
                     this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
                     treeAlbums.Visible = false;
-                    menuStrip1.Visible = false;
-                    statusStrip1.Visible = false;
-                    pgFilesAdd.Visible = false;
+                    stBar.Visible = false;
+                    stpgFiles.Visible = false;
                     tbMain.Width += treeAlbums.Width;
                     tbMain.Left = 0;
                     imgViewer.HidePanels(true);
@@ -552,10 +487,9 @@ namespace AV
                 }
                 else if ((int)m.WParam == (int)Keys.F3)
                 {
-                    menuStrip1.Visible = true;
-                    pgFilesAdd.Visible = bFileAdd;
+                    stpgFiles.Visible = bFileAdd;
                     this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
-                    statusStrip1.Visible = true;
+                    stBar.Visible = true;
                     treeAlbums.Visible = true;
                     tbMain.Width -= treeAlbums.Width;
                     tbMain.Left = treeAlbums.Width + 5;
@@ -742,14 +676,27 @@ namespace AV
             {
                 if (phh.infoTags != null && phh.infoTags.ToUpper().Contains("D") && showIcons)
                 {
-                    e.Graphics.DrawIcon(AlbumViewer.Properties.Resources.delete, 0, 0);
+                    e.Graphics.DrawIcon(AV.Properties.Resources.delete, 0, 0);
                 }
             }
         }
 
         private void pgFilesAdd_Click(object sender, EventArgs e)
         {
-            pgFilesAdd.Visible = false;
+            stpgFiles.Visible = false;
+        }
+
+        private void sbAddFiles_Click(object sender, EventArgs e)
+        {
+            int i = 0;
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.SelectedPath = "c:\\";
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                string fldName = fbd.SelectedPath;
+                Thread thread = new Thread(() => AV.PhIterator.IterateAndSave(fldName, this));
+                thread.Start();
+            }
         }
     }
 }

@@ -91,21 +91,48 @@ namespace AV
 
         internal static void AddPhAsDup(ph p)
         {
-            Data.alDb.dup_ph.Add(p);
-            RefreshDatabase(p);
+            dup_ph dp = new dup_ph();
+            dp.id = p.id;
+            dp.path = p.path;
+            if (!Data.ExistsAsRecord(dp))
+            {
+                Data.alDb.dup_ph.Add(dp);
+                Data.alDb.SaveChanges();
+            }
         }
 
         public static bool ExistsAsRecord(ph p)
         {
             if (alDb.phs.Where(p1 => p1.id.Trim() == p.id.Trim()).Count() > 0)
             {
-                return true;
+
+                if (alDb.phs.Where(p1 => p1.time_stamp == p.time_stamp).Count() > 0)
+                    return true;
+                else
+                    return false;
             }
             else
             {
                 return false;
             }
         }
+
+        public static bool ExistsAsRecord(dup_ph p)
+        {
+            if (alDb.dup_ph.Where(p1 => p1.id.Trim() == p.id.Trim()).Count() > 0)
+            {
+
+                if (alDb.dup_ph.Where(p1 => p1.path == p.path).Count() > 0)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
         public static List<ph> GetPhByMonthsAndYear(int year, int month)
         {
@@ -230,6 +257,7 @@ namespace AV
         public static void AddPh(ph p)
         {
             Data.alDb.phs.Add(p);
+            Data.alDb.SaveChanges();
             RefreshDatabase(p);
 
             //string sqlInsert = "Insert into ph (id, name, description,path,time_stamp) values ('"+ p.Id + "','" +p.Name + "','" + p.Description + "','" + p.FilePath + "','" + p.CreationDate+"')";
@@ -249,11 +277,6 @@ namespace AV
             string sqlInsert = "Insert into ph_al (ph_id, al_id) values ('" + phId + "','" + alId + "')";
 
             DBExecutor.ExecuteCommand(sqlInsert);
-        }
-
-        public static List<al> GetAls()
-        {
-            return alDb.als.ToList();
         }
 
         public static List<ph> GetPhs()
