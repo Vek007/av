@@ -138,6 +138,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ph](
+	[pKey] [bigint] IDENTITY(1,1) NOT NULL,
 	[id] [varchar](255) NOT NULL,
 	[name] [nvarchar](255) NOT NULL,
 	[description] [nvarchar](200) NULL,
@@ -145,12 +146,14 @@ CREATE TABLE [dbo].[ph](
 	[path] [nvarchar](max) NULL,
 	[time_stamp] [datetimeoffset](7) NULL,
 	[infoTags] [nvarchar](max) NULL,
+	[is_dup] [bit] NULL,
  CONSTRAINT [PK_Photos1] PRIMARY KEY CLUSTERED 
 (
-	[id] ASC
+	[pKey] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
+
 /****** Object:  Table [dbo].[ph1]    Script Date: 2018-09-21 5:00:00 PM ******/
 SET ANSI_NULLS ON
 GO
