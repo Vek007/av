@@ -9,6 +9,9 @@ using System.Configuration;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Core.Objects;
 using System.Globalization;
+using System.Diagnostics;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity;
 
 namespace AV
 {
@@ -103,18 +106,19 @@ namespace AV
 
         public static bool ExistsAsRecord(ph p)
         {
-            if (alDb.phs.Where(p1 => p1.id.Trim() == p.id.Trim()).Count() > 0)
-            {
+            Debug.WriteLine(p.id + p.time_stamp.ToString());
+            List<ph> pDbs = alDb.phs.Where(p1 => p1.id.Trim() == p.id.Trim()).ToList();
 
-                if (alDb.phs.Where(p1 => p1.time_stamp == p.time_stamp).Count() > 0)
-                    return true;
-                else
-                    return false;
-            }
-            else
+            foreach (ph pd in pDbs)
             {
-                return false;
+                {
+                    if (pd.time_stamp.Value.Date.Day == p.time_stamp.Value.Date.Day &&
+                        pd.time_stamp.Value.Date.Month == p.time_stamp.Value.Date.Month &&
+                        pd.time_stamp.Value.Date.Year == p.time_stamp.Value.Date.Year)
+                        return true;
+                }
             }
+            return false;
         }
 
         public static bool ExistsAsRecord(dup_ph p)
@@ -256,9 +260,16 @@ namespace AV
         /// <param name="p">Ph to add</param>
         public static void AddPh(ph p)
         {
-            Data.alDb.phs.Add(p);
-            Data.alDb.SaveChanges();
-            RefreshDatabase(p);
+            if (!Data.ExistsAsRecord(p))
+            {
+                Data.alDb.phs.Add(p);
+                Data.alDb.SaveChanges();
+                RefreshDatabase(p);
+            }
+            else
+            {
+                Debug.WriteLine("Duplicate:" + p.id + " - " + p.path);
+            }
 
             //string sqlInsert = "Insert into ph (id, name, description,path,time_stamp) values ('"+ p.Id + "','" +p.Name + "','" + p.Description + "','" + p.FilePath + "','" + p.CreationDate+"')";
 
