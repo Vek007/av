@@ -109,6 +109,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AlPh.Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="AlPh.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlPh.tt</DependentUpon>
+    </Compile>
     <Compile Include="AlPh.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -122,9 +127,6 @@
       <DependentUpon>DatePicker.cs</DependentUpon>
     </Compile>
     <Compile Include="DBExecutor.cs" />
-    <Compile Include="dup_ph.cs">
-      <DependentUpon>AlPh.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entities\Al.cs" />
     <Compile Include="Entities\Ph.cs" />
     <Compile Include="ExtensionMethods.cs" />

@@ -14,12 +14,6 @@ namespace AV
     
     public partial class ph
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ph()
-        {
-            this.dup_ph = new HashSet<dup_ph>();
-        }
-    
         public string id { get; set; }
         public string name { get; set; }
         public string description { get; set; }
@@ -27,8 +21,7 @@ namespace AV
         public string path { get; set; }
         public Nullable<System.DateTimeOffset> time_stamp { get; set; }
         public string infoTags { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<dup_ph> dup_ph { get; set; }
+        public long pKey { get; set; }
+        public Nullable<bool> is_dup { get; set; }
     }
 }

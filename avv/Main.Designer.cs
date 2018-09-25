@@ -90,8 +90,6 @@
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
-            this.deleteToolStripMenuItem.Text = "Delete";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.OnDelete);
             // 
             // openFileDialog1
             // 
@@ -195,7 +193,7 @@
             this.sbLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.sbLabel.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.sbLabel.BorderStyle = System.Windows.Forms.Border3DStyle.Sunken;
             this.sbLabel.Margin = new System.Windows.Forms.Padding(0, 3, 10, 2);
             this.sbLabel.Name = "sbLabel";
             this.sbLabel.Size = new System.Drawing.Size(64, 15);
@@ -206,7 +204,6 @@
             this.sbPictSizeMode.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.sbPictSizeMode.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
             this.sbPictSizeMode.Margin = new System.Windows.Forms.Padding(0, 3, 10, 2);
             this.sbPictSizeMode.Name = "sbPictSizeMode";
             this.sbPictSizeMode.Size = new System.Drawing.Size(65, 15);

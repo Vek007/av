@@ -94,13 +94,12 @@ namespace AV
 
         internal static void AddPhAsDup(ph p)
         {
-            dup_ph dp = new dup_ph();
-            dp.id = p.id;
-            dp.path = p.path;
-            if (!Data.ExistsAsRecord(dp))
+            if (alDb.phs.Where(p1 => p1.path.Trim() == p.path.Trim()).Count() <= 0)
             {
-                Data.alDb.dup_ph.Add(dp);
+                p.is_dup = true;
+                Data.alDb.phs.Add(p);
                 Data.alDb.SaveChanges();
+                RefreshDatabase(p);
             }
         }
 
@@ -114,29 +113,14 @@ namespace AV
                 {
                     if (pd.time_stamp.Value.Date.Day == p.time_stamp.Value.Date.Day &&
                         pd.time_stamp.Value.Date.Month == p.time_stamp.Value.Date.Month &&
-                        pd.time_stamp.Value.Date.Year == p.time_stamp.Value.Date.Year)
+                        pd.time_stamp.Value.Date.Year == p.time_stamp.Value.Date.Year &&
+                        pd.time_stamp.Value.Date.Hour == p.time_stamp.Value.Date.Hour &&
+                        pd.time_stamp.Value.Date.Minute == p.time_stamp.Value.Date.Minute)
                         return true;
                 }
             }
             return false;
         }
-
-        public static bool ExistsAsRecord(dup_ph p)
-        {
-            if (alDb.dup_ph.Where(p1 => p1.id.Trim() == p.id.Trim()).Count() > 0)
-            {
-
-                if (alDb.dup_ph.Where(p1 => p1.path == p.path).Count() > 0)
-                    return true;
-                else
-                    return false;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
 
         public static List<ph> GetPhByMonthsAndYear(int year, int month)
         {
@@ -275,153 +259,6 @@ namespace AV
 
             //DBExecutor.ExecuteCommand(sqlInsert);
         }
-
-        public static void AddAl(string id)
-        {
-            string sqlInsert = "Insert into al (id, name) values ('" + id + "','" + id + "')";
-
-            DBExecutor.ExecuteCommand(sqlInsert);
-        }
-
-        public static void AddAP(string alId, string phId)
-        {
-            string sqlInsert = "Insert into ph_al (ph_id, al_id) values ('" + phId + "','" + alId + "')";
-
-            DBExecutor.ExecuteCommand(sqlInsert);
-        }
-
-        public static List<ph> GetPhs()
-        {
-            return alDb.phs.ToList();
-        }
-
-        /// <summary>
-        /// Get Ph matching Id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public static Ph GetPh(string id)
-        {
-            Ph Ph = new Ph()
-            {
-                Id = id
-            };
-
-            using(SqlConnection conn = new SqlConnection(ConnectionString))
-            {
-                using(SqlCommand cmd = new SqlCommand("GetPh", conn))
-                {
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@id", id);
-
-                    DataTable dt = new DataTable();
-                    dt.Load(cmd.ExecuteReader());
-
-                    if(dt.Rows.Count != 0)
-                    {
-                        Ph.Name = dt.Rows[0]["name"].ToString();
-                        Ph.Description = dt.Rows[0]["description"].ToString();
-                        Ph.Image = (byte[])dt.Rows[0]["Ph"];
-                    }
-
-                    // Could also use a SqlDataReader
-                    //SqlDataReader reader = cmd.ExecuteReader();
-                    //while(reader.Read())
-                    //{
-                    //    Ph.Name = reader.GetString(0);
-                    //    Ph.Description = reader.GetString(1);
-                    //    //Ph.Image = (byte[])reader.GetValue(2);
-                    //}
-                }
-            }
-
-            return Ph;
-        }
-
-        /// <summary>
-        /// Delete Al and all Phs associated with it
-        /// </summary>
-        /// <param name="id">Id of Album to delete</param>
-        public static void DeleteAl(int id)
-        {
-            using(SqlConnection conn = new SqlConnection(ConnectionString))
-            {
-                using(SqlCommand cmd = new SqlCommand("DeleteAlbum", conn))
-                {
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@id", id);
-
-                    conn.Open();
-
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Delete Ph
-        /// </summary>
-        /// <param name="id">Id of Ph to delete</param>
-        public static void DeletePh(string id)
-        {
-            using(SqlConnection conn = new SqlConnection(ConnectionString))
-            {
-                using(SqlCommand cmd = new SqlCommand("DeletePh", conn))
-                {
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@id", id);
-
-                    conn.Open();
-
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Update Al
-        /// </summary>
-        /// <param name="album">Album info to update</param>
-        public static void UpdateAl(Al album)
-        {
-            using(SqlConnection conn = new SqlConnection(ConnectionString))
-            {
-                using(SqlCommand cmd = new SqlCommand("UpdateAlbum", conn))
-                {
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@id", album.Id);
-                    cmd.Parameters.AddWithValue("@name", album.Name);
-                    cmd.Parameters.AddWithValue("@desc", album.Description);
-
-                    conn.Open();
-
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Update Ph
-        /// </summary>
-        /// <param name="Ph">Ph info to update</param>
-        public static void UpdatePh(Ph Ph)
-        {
-            using(SqlConnection conn = new SqlConnection(ConnectionString))
-            {
-                using(SqlCommand cmd = new SqlCommand("UpdatePh", conn))
-                {
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@id", Ph.Id);
-                    cmd.Parameters.AddWithValue("@name", Ph.Name);
-                    cmd.Parameters.AddWithValue("@desc", Ph.Description);
-                    
-                    conn.Open();
-
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
 
         public static void RefreshDatabase(Object entity)
         {

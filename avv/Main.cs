@@ -102,32 +102,6 @@ namespace AV
             }
         }
 
-
-        #region Menu Events Handlers
-
-        /// <summary>
-        /// Exit menu handler
-        /// </summary>
-        private void OnExit(object sender, System.EventArgs e)
-        {
-            Close();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnNewAlbum(object sender, EventArgs e)
-        {
-            Al album = Data.AddAl();
-
-            TreeNode node = treeAlbums.Nodes.Add(album.Name);
-            node.Tag = album;
-        }
-
-        #endregion
-
         #region TreeView Context Menu Handlers 
 
         /// <summary>
@@ -184,27 +158,6 @@ namespace AV
                     node.Tag = Ph;
                 }
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnDelete(object sender, EventArgs e)
-        {
-            // Determine the type of node
-            if(treeAlbums.SelectedNode.Tag is Al)
-            {
-                Data.DeleteAl(((Al)treeAlbums.SelectedNode.Tag).Id);
-            }
-            else if(treeAlbums.SelectedNode.Tag is Ph)
-            {
-                Data.DeletePh(((Ph)treeAlbums.SelectedNode.Tag).Id);
-            }
-
-            // Remove the node from the tree
-            treeAlbums.SelectedNode.Remove();
         }
 
         #endregion
@@ -271,14 +224,7 @@ namespace AV
                 }
             }
 
-            if (treeAlbums.SelectedNode.Nodes.Count > 0)
-            {
-                treeAlbums.SelectedNode = treeAlbums.SelectedNode.Nodes[0];
-            }
-//            pictImage.ImageLocation = imgViewer.GetCurrentImage().path;
-  //          pictImage.Refresh();
-
-            tbMain.SelectedIndex = 2;
+            tbMain.SelectedIndex = 1;
         }
 
         public void SaveTags()
@@ -417,7 +363,7 @@ namespace AV
             SaveTags();
         }
 
-        private void RefreshTree()
+        public void RefreshTree()
         {
             treeAlbums.Nodes.Clear();
             LoadAls();
@@ -448,9 +394,15 @@ namespace AV
             {
                 if ((int)m.WParam == (int)Keys.Left)
                 {
+                    //Debug.WriteLine("Sending left key to tree album.");
+                    //KeyEventArgs e = new KeyEventArgs(Keys.Left);
+                    //treeAlbums_KeyDown(null, e);
                 }
                 else if ((int)m.WParam == (int)Keys.Right)
                 {
+                    //Debug.WriteLine("Sending right key to tree album.");
+                    //KeyEventArgs e = new KeyEventArgs(Keys.Right);
+                    //treeAlbums_KeyDown(null, e);
                 }
                 else if ((int)m.WParam == (int)Keys.Add)
                 {
@@ -672,7 +624,7 @@ namespace AV
 
         private void pictImage_Paint(object sender, PaintEventArgs e)
         {
-            if (treeAlbums.SelectedNode.Tag is ph phh)
+            if (treeAlbums.SelectedNode!=null && treeAlbums.SelectedNode.Tag!=null&&treeAlbums.SelectedNode.Tag is ph phh)
             {
                 if (phh.infoTags != null && phh.infoTags.ToUpper().Contains("D") && showIcons)
                 {

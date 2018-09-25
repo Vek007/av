@@ -51,6 +51,14 @@ namespace AV
                 {
                     parent.ShowProgressBar(false);
                 }));
+
+                if (MessageBox.Show("Do you want to refresh the Album tree?", "Refresh", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    parent.Invoke((MethodInvoker)(() =>
+                    {
+                        parent.RefreshTree();
+                    }));
+                }
             }
 
         }
