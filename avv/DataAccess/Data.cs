@@ -129,6 +129,14 @@ namespace AV
             return phList;
         }
 
+        public static List<ph> GetPhByDayMonthYear(int year, int month, int day)
+        {
+            List<ph> phList = alDb.phs.Where(p => p.time_stamp.Value.Year == year && p.time_stamp.Value.Month == month && p.time_stamp.Value.Day == day).OrderBy(p => p.time_stamp.Value).ToList();
+
+            return phList;
+        }
+
+
         public static List<ph> GetPhByStartAndEndDate(DateTime stDate, DateTime endDate)
         {
             List<ph> phList = alDb.phs.Where(p => p.time_stamp.Value >= stDate && p.time_stamp.Value <= endDate).OrderBy(p => p.time_stamp.Value).ToList();
@@ -161,6 +169,15 @@ namespace AV
 
             return monthInNames;
         }
+
+        public static List<int> GetDistinctPhDays(int year, int month)
+        {
+            List<int> days = alDb.phs.OrderBy(p => p.time_stamp.Value).Where(p => p.time_stamp.Value.Year == year && p.time_stamp.Value.Month == month).
+                Select(p => p.time_stamp.Value.Day).Distinct().ToList();
+
+            return days;
+        }
+
 
         /// <summary>
         /// Add new al to database

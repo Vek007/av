@@ -66,15 +66,29 @@ namespace AV
                 {
                     TreeNode mnNode = new TreeNode(mn);
                     mnNode.Tag = "months";
+
+                    int month = Convert.ToDateTime(mn + " 01, 1900").Month;
+                    List<int> days = Data.GetDistinctPhDays(Convert.ToInt32(year), month);
                     yearNode.Nodes.Add(mnNode);
-                    List<ph> phs = Data.GetPhByMonthsAndYear(Convert.ToInt32(year), DateTime.ParseExact(mn, "MMMM", CultureInfo.CurrentCulture).Month);
 
-                    foreach (ph p in phs)
+                    foreach (int day in days)
                     {
-                        TreeNode pNode = new TreeNode(p.id+"("+p.time_stamp.Value.Day.ToString()+")");
-                        pNode.Tag = p;
+                        string dayNodeName = day.ToString()+ "-"+ Convert.ToDateTime(mn + " "+ day +", "+year).ToString("dddd");
+                        TreeNode dayNode = new TreeNode(dayNodeName);
+                        dayNode.Tag = "days";
 
-                        mnNode.Nodes.Add(pNode);
+                        mnNode.Nodes.Add(dayNode);
+
+                        List<ph> phs = Data.GetPhByDayMonthYear(Convert.ToInt32(year), DateTime.ParseExact(mn, "MMMM", CultureInfo.CurrentCulture).Month, day);
+
+                        foreach (ph p in phs)
+                        {
+//                            TreeNode pNode = new TreeNode(p.id + "(" + p.time_stamp.Value.Day.ToString() + ")");
+                            TreeNode pNode = new TreeNode(p.id);
+                            pNode.Tag = p;
+
+                            dayNode.Nodes.Add(pNode);
+                        }
                     }
                 }
                 treeAlbums.Nodes.Add(yearNode);
@@ -172,13 +186,13 @@ namespace AV
             if (treeAlbums.SelectedNode.Tag is string alm)
             {
                 selectedNode = null;
-                if (alm.Trim().ToLower() == "months")
+                if (alm.Trim().ToLower() == "days")
                 {
                     LoadImageList(treeAlbums.SelectedNode);
                 }
-                else
+                else if (alm.Trim().ToLower() == "months")
                 {
-                    if(treeAlbums.SelectedNode.Nodes.Count > 0)
+                    if (treeAlbums.SelectedNode.Nodes.Count > 0)
                         LoadImageList(treeAlbums.SelectedNode.Nodes[0]);
                 }
 
@@ -443,6 +457,7 @@ namespace AV
                     this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
                     stBar.Visible = true;
                     treeAlbums.Visible = true;
+                    treeAlbums.Refresh();
                     tbMain.Width -= treeAlbums.Width;
                     tbMain.Left = treeAlbums.Width + 5;
 
