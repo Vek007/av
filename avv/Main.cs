@@ -71,7 +71,7 @@ namespace AV
                     List<int> days = Data.GetDistinctPhDays(Convert.ToInt32(year), month);
                     yearNode.Nodes.Add(mnNode);
 
-                    foreach (int day in days)
+                    foreach (int day in days.OrderBy(a=>a))
                     {
                         string dayNodeName = day.ToString()+ "-"+ Convert.ToDateTime(mn + " "+ day +", "+year).ToString("dddd");
                         TreeNode dayNode = new TreeNode(dayNodeName);
@@ -79,7 +79,7 @@ namespace AV
 
                         mnNode.Nodes.Add(dayNode);
 
-                        List<ph> phs = Data.GetPhByDayMonthYear(Convert.ToInt32(year), DateTime.ParseExact(mn, "MMMM", CultureInfo.CurrentCulture).Month, day);
+                        List<ph> phs = Data.GetPhByDayMonthYear(Convert.ToInt32(year), DateTime.ParseExact(mn, "MMMM", CultureInfo.CurrentCulture).Month, day).OrderBy(p=>p.time_stamp).ToList();
 
                         foreach (ph p in phs)
                         {

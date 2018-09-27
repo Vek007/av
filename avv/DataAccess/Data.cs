@@ -163,7 +163,7 @@ namespace AV
         public static List<string> GetDistinctPhMonths(int year)
         {
             List<string> monthInNames = alDb.phs.OrderBy(p => p.time_stamp.Value).Where(p=>p.time_stamp.Value.Year==year).
-                Select(p => p.time_stamp.Value.Month.ToString()).Distinct().ToList().
+                Select(p => p.time_stamp.Value.Month.ToString()).Distinct().OrderBy(m=>m).ToList().
                 Select(a => CultureInfo.CurrentCulture.DateTimeFormat.
                 GetMonthName(Convert.ToInt32(a))).ToList();
 
