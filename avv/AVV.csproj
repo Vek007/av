@@ -191,6 +191,7 @@
       <LastGenOutput>AlPh.cs</LastGenOutput>
     </Content>
     <Content Include="Database\Scripts.sql" />
+    <Content Include="Database\sql_data.sql" />
     <Content Include="M Icon.ico" />
     <None Include="Resources\delete.ico" />
   </ItemGroup>
