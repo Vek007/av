@@ -329,3 +329,9 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
 avv/App.config
+avv/AlPh.Designer.cs
+avv/AlPh.edmx
+avv/AlPh.edmx.diagram
+avv/App.config
+avv/AlPh.edmx
+avv/AlPh.Designer.cs

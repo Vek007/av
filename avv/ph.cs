@@ -14,6 +14,7 @@ namespace AV
     
     public partial class ph
     {
+        public long pKey { get; set; }
         public string id { get; set; }
         public string name { get; set; }
         public string description { get; set; }
@@ -21,7 +22,6 @@ namespace AV
         public string path { get; set; }
         public Nullable<System.DateTimeOffset> time_stamp { get; set; }
         public string infoTags { get; set; }
-        public long pKey { get; set; }
         public Nullable<bool> is_dup { get; set; }
     }
 }
