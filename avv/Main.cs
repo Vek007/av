@@ -73,13 +73,13 @@ namespace AV
 
                     foreach (int day in days.OrderBy(a=>a))
                     {
-                        string dayNodeName = day.ToString()+ "-"+ Convert.ToDateTime(mn + " "+ day +", "+year).ToString("dddd");
+
+                        List<ph> phs = Data.GetPhByDayMonthYear(Convert.ToInt32(year), DateTime.ParseExact(mn, "MMMM", CultureInfo.CurrentCulture).Month, day).OrderBy(p=>p.time_stamp).ToList();
+                        string dayNodeName = day.ToString() + "-" + Convert.ToDateTime(mn + " " + day + ", " + year).ToString("dddd") + "(" + phs.Count.ToString() + ")";
                         TreeNode dayNode = new TreeNode(dayNodeName);
                         dayNode.Tag = "days";
 
                         mnNode.Nodes.Add(dayNode);
-
-                        List<ph> phs = Data.GetPhByDayMonthYear(Convert.ToInt32(year), DateTime.ParseExact(mn, "MMMM", CultureInfo.CurrentCulture).Month, day).OrderBy(p=>p.time_stamp).ToList();
 
                         foreach (ph p in phs)
                         {
