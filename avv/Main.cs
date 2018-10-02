@@ -600,7 +600,8 @@ namespace AV
                             Debug.WriteLine("<>" + treeAlbums.SelectedNode.Text);
                         }
                         e.Handled = true;
-
+                        treeAlbums.EndUpdate();
+                        treeAlbums.Refresh();
                     }
                 }
             }
