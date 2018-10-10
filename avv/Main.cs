@@ -40,17 +40,6 @@ namespace AV
         private void OnMouseWheel(object sender, MouseEventArgs e)
         {
             Debug.WriteLine(e.Delta);
-            if (tbMain.SelectedIndex == 2)
-            {
-                if (e.Delta > 0)
-                {
-                    imgViewer.ZoomIn();
-                }
-                else
-                {
-                    imgViewer.ZoomOut();
-                }
-            }
         }
 
         private void LoadAls()
@@ -206,7 +195,7 @@ namespace AV
                     pictImage.ImageLocation = phh.path;
                     pictImage.Tag = phh;
                     UpdateStatusBar(phh.infoTags ?? phh.id + "(no tags)");
-                    tbMain.SelectedIndex = 2;
+                    tbMain.SelectedIndex = 0;
                 }
                 else
                 {
@@ -227,18 +216,7 @@ namespace AV
                 phs.Add((node.Tag as ph).GetPhoto());
             }
 
-            imgViewer.LoadImageList(phs);
-
-            if (imgViewer.GetImageList().Count > 0)
-            {
-                imgViewer.ApplyLeftRightArrowKey(true, out string msg);
-                if (msg.Length > 0)
-                {
-                    UpdateStatusBar(msg);
-                }
-            }
-
-            tbMain.SelectedIndex = 1;
+            tbMain.SelectedIndex = 0;
         }
 
         public void SaveTags()
@@ -386,7 +364,7 @@ namespace AV
 
         private void Main_Load(object sender, EventArgs e)
         {
-            tbMain.SelectedIndex = 2;
+            tbMain.SelectedIndex = 0;
             RefreshTree();
         }
 
@@ -420,11 +398,9 @@ namespace AV
                 }
                 else if ((int)m.WParam == (int)Keys.Add)
                 {
-                    imgViewer.ZoomIn();
                 }
                 else if ((int)m.WParam == (int)Keys.Subtract)
                 {
-                    imgViewer.ZoomOut();
                 }
                 else if ((int)m.WParam == (int)Keys.F2)
                 {
@@ -435,7 +411,6 @@ namespace AV
                     stpgFiles.Visible = false;
                     tbMain.Width += treeAlbums.Width;
                     tbMain.Left = 0;
-                    imgViewer.HidePanels(true);
                 }
                 else if ((int)m.WParam == (int)Keys.F8)
                 {
@@ -461,7 +436,6 @@ namespace AV
                     tbMain.Width -= treeAlbums.Width;
                     tbMain.Left = treeAlbums.Width + 5;
 
-                    imgViewer.HidePanels(false);
                 }
                 else if ((int)m.WParam == (int)Keys.F12)
                 {
@@ -490,28 +464,32 @@ namespace AV
                 {
                     Debug.WriteLine(m.WParam.ToString());
 
-                    Photo curImg =  imgViewer.GetCurrentImage();
-
                     ph curPhh = treeAlbums.SelectedNode.Tag as ph;//Data.alDb.phs.Where(a => a.path == curImg.path).FirstOrDefault();
 
-                    curPhh.infoTags = curPhh.infoTags ?? "";
+                    curPhh = pictImage.Tag as ph;
 
-                    if (curPhh != null && !curPhh.infoTags.ToLower().Contains((char)m.WParam))
+                    if (curPhh != null)
                     {
-                        curPhh.infoTags += (char)m.WParam;
+                        curPhh.infoTags = curPhh.infoTags ?? "";
+
+                        if (curPhh != null && !curPhh.infoTags.ToLower().Contains((char)m.WParam))
+                        {
+                            curPhh.infoTags += (char)m.WParam;
+                        }
+
+                        UpdateStatusBar(curPhh.infoTags);
+
+                        curPhh.UpdatePh();
+                        Data.RefreshDatabase(curPhh);
+                        pictImage.Tag = curPhh;
+                        pictImage.Invalidate();
                     }
-
-                    UpdateStatusBar(curPhh.infoTags);
-
-                    curPhh.UpdatePh();
-                    Data.RefreshDatabase(curPhh);
-                    pictImage.Invalidate();
                 }
                 else if ((int)m.WParam == (int)Keys.Back)
                 {
-                    Photo curImg = imgViewer.GetCurrentImage();
-
                     ph curPhh = treeAlbums.SelectedNode.Tag as ph;//Data.alDb.phs.Where(a => a.path == curImg.path).FirstOrDefault();
+
+                    curPhh = pictImage.Tag as ph;
 
                     curPhh.infoTags = curPhh.infoTags ?? "";
 
@@ -524,6 +502,7 @@ namespace AV
 
                     curPhh.UpdatePh();
                     Data.RefreshDatabase(curPhh);
+                    pictImage.Tag = curPhh;
                     pictImage.Invalidate();
                 }
 
@@ -532,7 +511,7 @@ namespace AV
             return base.ProcessKeyPreview(ref m);
         }
 
-        bool showIcons = false;
+        bool showIcons = true;
 
         private void UpdateStatusBar(string infoTags)
         {
@@ -550,7 +529,7 @@ namespace AV
         private void pictImage_Click(object sender, EventArgs e)
         {
             if (pictImage.Parent == this)
-                pictImage.Parent = tbMain.TabPages[1];
+                pictImage.Parent = tbMain.TabPages[0];
             else
                 pictImage.Parent = this;
 
@@ -640,11 +619,12 @@ namespace AV
 
         private void pictImage_Paint(object sender, PaintEventArgs e)
         {
-            if (treeAlbums.SelectedNode!=null && treeAlbums.SelectedNode.Tag!=null&&treeAlbums.SelectedNode.Tag is ph phh)
+//            if (treeAlbums.SelectedNode!=null && treeAlbums.SelectedNode.Tag!=null&&treeAlbums.SelectedNode.Tag is ph phh)
+            if (pictImage.Tag is ph phh)
             {
                 if (phh.infoTags != null && phh.infoTags.ToUpper().Contains("D") && showIcons)
                 {
-                    e.Graphics.DrawIcon(AV.Properties.Resources.delete, 0, 0);
+                    e.Graphics.DrawIcon(Properties.Resources.delete, 0, 0);
                 }
             }
         }

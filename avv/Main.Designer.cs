@@ -35,11 +35,6 @@
             this.addPhToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.tbMain = new System.Windows.Forms.TabControl();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.imgViewer = new KaiwaProjects.KpImageViewer();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.pictImage = new System.Windows.Forms.PictureBox();
             this.stBar = new System.Windows.Forms.StatusStrip();
             this.sbLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.sbPictSizeMode = new System.Windows.Forms.ToolStripStatusLabel();
@@ -50,13 +45,15 @@
             this.stpgFiles = new System.Windows.Forms.ToolStripProgressBar();
             this.tmrSlideShow = new System.Windows.Forms.Timer(this.components);
             this.tbMainPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.tbMain = new System.Windows.Forms.TabControl();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.pictImage = new System.Windows.Forms.PictureBox();
             this.contextMenuAlbum.SuspendLayout();
-            this.tbMain.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictImage)).BeginInit();
             this.stBar.SuspendLayout();
             this.tbMainPanel.SuspendLayout();
+            this.tbMain.SuspendLayout();
+            this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictImage)).BeginInit();
             this.SuspendLayout();
             // 
             // treeAlbums
@@ -96,79 +93,6 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "Image files|*.gif;*.jpg;*.jpeg;*png";
             this.openFileDialog1.Multiselect = true;
-            // 
-            // tbMain
-            // 
-            this.tbMain.Controls.Add(this.tabPage3);
-            this.tbMain.Controls.Add(this.tabPage4);
-            this.tbMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbMain.Location = new System.Drawing.Point(231, 3);
-            this.tbMain.Name = "tbMain";
-            this.tbMain.SelectedIndex = 0;
-            this.tbMain.Size = new System.Drawing.Size(703, 597);
-            this.tbMain.TabIndex = 8;
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.imgViewer);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(695, 571);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Viewer";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // imgViewer
-            // 
-            this.imgViewer.BackgroundColor = System.Drawing.Color.Black;
-            this.imgViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.imgViewer.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.imgViewer.GifAnimation = false;
-            this.imgViewer.GifFPS = 15D;
-            this.imgViewer.Image = null;
-            this.imgViewer.Location = new System.Drawing.Point(3, 3);
-            this.imgViewer.MenuColor = System.Drawing.Color.LightSteelBlue;
-            this.imgViewer.MenuPanelColor = System.Drawing.Color.LightSteelBlue;
-            this.imgViewer.MinimumSize = new System.Drawing.Size(454, 157);
-            this.imgViewer.Name = "imgViewer";
-            this.imgViewer.NavigationPanelColor = System.Drawing.Color.LightSteelBlue;
-            this.imgViewer.NavigationTextColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.imgViewer.OpenButton = false;
-            this.imgViewer.PreviewButton = false;
-            this.imgViewer.PreviewPanelColor = System.Drawing.Color.LightSteelBlue;
-            this.imgViewer.PreviewText = "Preview";
-            this.imgViewer.PreviewTextColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.imgViewer.Rotation = 0;
-            this.imgViewer.Scrollbars = false;
-            this.imgViewer.ShowPreview = true;
-            this.imgViewer.Size = new System.Drawing.Size(689, 565);
-            this.imgViewer.TabIndex = 0;
-            this.imgViewer.TextColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.imgViewer.Zoom = 100D;
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.pictImage);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(695, 571);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "pict";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // pictImage
-            // 
-            this.pictImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictImage.Location = new System.Drawing.Point(3, 3);
-            this.pictImage.Name = "pictImage";
-            this.pictImage.Size = new System.Drawing.Size(689, 565);
-            this.pictImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictImage.TabIndex = 0;
-            this.pictImage.TabStop = false;
-            this.pictImage.Click += new System.EventHandler(this.pictImage_Click);
-            this.pictImage.Paint += new System.Windows.Forms.PaintEventHandler(this.pictImage_Paint);
             // 
             // stBar
             // 
@@ -285,6 +209,39 @@
             this.tbMainPanel.Size = new System.Drawing.Size(937, 623);
             this.tbMainPanel.TabIndex = 11;
             // 
+            // tbMain
+            // 
+            this.tbMain.Controls.Add(this.tabPage4);
+            this.tbMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbMain.Location = new System.Drawing.Point(231, 3);
+            this.tbMain.Name = "tbMain";
+            this.tbMain.SelectedIndex = 0;
+            this.tbMain.Size = new System.Drawing.Size(703, 597);
+            this.tbMain.TabIndex = 8;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.pictImage);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(695, 571);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Picture";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // pictImage
+            // 
+            this.pictImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictImage.Location = new System.Drawing.Point(3, 3);
+            this.pictImage.Name = "pictImage";
+            this.pictImage.Size = new System.Drawing.Size(689, 565);
+            this.pictImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictImage.TabIndex = 0;
+            this.pictImage.TabStop = false;
+            this.pictImage.Click += new System.EventHandler(this.pictImage_Click);
+            this.pictImage.Paint += new System.Windows.Forms.PaintEventHandler(this.pictImage_Paint);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -297,14 +254,13 @@
             this.Text = "al";
             this.Load += new System.EventHandler(this.Main_Load);
             this.contextMenuAlbum.ResumeLayout(false);
-            this.tbMain.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictImage)).EndInit();
             this.stBar.ResumeLayout(false);
             this.stBar.PerformLayout();
             this.tbMainPanel.ResumeLayout(false);
             this.tbMainPanel.PerformLayout();
+            this.tbMain.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictImage)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -315,21 +271,19 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuAlbum;
         private System.Windows.Forms.ToolStripMenuItem addPhToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.TabControl tbMain;
-        private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.StatusStrip stBar;
         private System.Windows.Forms.ToolStripStatusLabel sbLabel;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.PictureBox pictImage;
         private System.Windows.Forms.ToolStripStatusLabel sbPictSizeMode;
         private System.Windows.Forms.Timer tmrSlideShow;
         private System.Windows.Forms.ToolStripStatusLabel sbSlideShow;
         private System.Windows.Forms.ToolStripStatusLabel sbTimerIncr;
         private System.Windows.Forms.ToolStripStatusLabel sbTimerDecr;
-        private KaiwaProjects.KpImageViewer imgViewer;
         private System.Windows.Forms.TableLayoutPanel tbMainPanel;
         private System.Windows.Forms.ToolStripProgressBar stpgFiles;
         private System.Windows.Forms.ToolStripStatusLabel sbAddFiles;
+        private System.Windows.Forms.TabControl tbMain;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.PictureBox pictImage;
     }
 }
 
